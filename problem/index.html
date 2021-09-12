@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="给定一棵 \(n\) 个节点的树，每个节点 \(u\) 上有一个可容纳 \(k_u\) 个球的桶，\(m\) 次操作：给一个节点到根路径上的所有节点的桶内放一个有颜色的球，如果节点的桶满了则不能放进这个节点，\(q\) 次询问某节点的桶内的球有多少种颜色。 \(n, m, q \le 10^5\)  因为节点上的桶有容量，所以只有某时刻前的操作会对该节点产生影响。 记 \(Max_u\) 表示\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一道题">
+<meta property="og:url" content="http://example.com/problem/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="给定一棵 \(n\) 个节点的树，每个节点 \(u\) 上有一个可容纳 \(k_u\) 个球的桶，\(m\) 次操作：给一个节点到根路径上的所有节点的桶内放一个有颜色的球，如果节点的桶满了则不能放进这个节点，\(q\) 次询问某节点的桶内的球有多少种颜色。 \(n, m, q \le 10^5\)  因为节点上的桶有容量，所以只有某时刻前的操作会对该节点产生影响。 记 \(Max_u\) 表示\">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/8mOxgRBsJMpzLI1.jpg">
+<meta property="article:published_time" content="2021-03-13T14:05:04.000Z">
+<meta property="article:modified_time" content="2021-03-13T14:05:04.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="数据结构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/10/24/8mOxgRBsJMpzLI1.jpg">
+
+
+<link rel="canonical" href="http://example.com/problem/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/problem/","path":"problem/","title":"一道题"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一道题 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一道题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 22:05:04" itemprop="dateCreated datePublished" datetime="2021-03-13T22:05:04+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%83%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">考试</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/problem/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="problem/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>给定一棵 <span class="math inline">\(n\)</span> 个节点的树，每个节点 <span class="math inline">\(u\)</span> 上有一个可容纳 <span class="math inline">\(k_u\)</span> 个球的桶，<span class="math inline">\(m\)</span> 次操作：给一个节点到根路径上的所有节点的桶内放一个<strong>有颜色的</strong>球，如果节点的桶满了则不能放进这个节点，<span class="math inline">\(q\)</span> 次询问某节点的桶内的球有多少种颜色。</p>
+<p><span class="math inline">\(n, m, q \le 10^5\)</span></p>
+</blockquote>
+<p>因为节点上的桶有容量，所以只有某时刻前的操作会对该节点产生影响。</p>
+<p>记 <span class="math inline">\(Max_u\)</span> 表示<span class="math inline">\(u\)</span>号节点上的桶<strong>恰好</strong>装满的时刻，考虑求出每个节点的 <span class="math inline">\(Max\)</span>，将所有询问以 <span class="math inline">\(Max\)</span> 为关键字升序排序，问题就转化为单点加球，子树查询颜色数的问题。</p>
+<ul>
+<li><p>求 <span class="math inline">\(Max\)</span>：</p>
+<p><span class="math inline">\(Max_u\)</span> 按照定义是所有覆盖 <span class="math inline">\(u\)</span> 节点的操作的时间第 <span class="math inline">\(k_u\)</span> 小，而所有覆盖 <span class="math inline">\(u\)</span> 节点的操作是下端点在 <span class="math inline">\(u\)</span> 子树内的操作，如果能将这些操作放到同一区间上，就可以用主席数实现区间第 <span class="math inline">\(k\)</span> 小。</p>
+<p>如果对每个点都至多有一次操作以它为下端点，将这个节点的 dfs 序作为对应操作的下标，操作的时间为值，问题就转化成了区间第 <span class="math inline">\(k\)</span> 小。</p>
+<p>但对每个点都可能作为多次操作的下端点，需要将每个结点扩充成一个区间，区间长度为这个节点对应操作的数量，然后就可以类别上一段所说的方法求出 <span class="math inline">\(Max\)</span>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;x[i], &amp;c[i]);</span><br><span class="line">    tim[dfn[x[i]]].<span class="built_in">push_back</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">    R[i] = R[i<span class="number">-1</span>]; <span class="comment">//R[i] 是 dfs 序为 i 的节点对应区间的右端点</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> t : tim[i]) SegTree::<span class="built_in">upd</span>(t, R[i]), R[i]++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">rep</span>(i, <span class="number">1</span>, n) Max[i] = SegTree::<span class="built_in">qry</span>(k[i], R[dfn[i]<span class="number">-1</span>], R[suf[i]]);</span><br></pre></td></tr></table></figure></li>
+<li><p>单点加球，子树查询颜色数的问题：</p>
+<p>考虑静态查询子树查询颜色数的问题，做法是每个有颜色的结点处 <span class="math inline">\(+1\)</span>，每个结点和同种颜色， <code>dfs</code> 序小于这个结点且 <code>dfs</code> 序最大的结点的 <code>lca</code> 处 <span class="math inline">\(-1\)</span>。</p>
+<p>如图</p>
+<figure>
+<img src="https://i.loli.net/2020/10/24/8mOxgRBsJMpzLI1.jpg" alt=".jpg" /><figcaption aria-hidden="true">.jpg</figcaption>
+</figure>
+<p>在 <span class="math inline">\(4，5\)</span> 号结点的 <code>lca</code>，<span class="math inline">\(1\)</span> 号结点处 <span class="math inline">\(-1\)</span>。</p>
+<p>在 <span class="math inline">\(5，6\)</span> 号结点的 <code>lca</code>，<span class="math inline">\(1\)</span> 号结点处 <span class="math inline">\(-1\)</span>。</p>
+<p>...</p>
+<p>然后查询子树和就是子树颜色数。</p>
+<p>再考虑单点加球，子树查询颜色数的问题。其实只需要加一个 <code>set</code> 数组和树状数组，<code>set</code> 数组维护当前每种颜色结点的 <code>dfs</code> 序，单点加球时在 <code>set</code> 中找出前驱和后继，这个点处 <span class="math inline">\(+1\)</span>，它和前驱的 <code>lca</code> 处 <span class="math inline">\(-1\)</span>，和后继的 <code>lca</code> 处 <span class="math inline">\(-1\)</span>，前驱和后继的 <code>lca</code> 处 <span class="math inline">\(+1\)</span>，然后查询子树和。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> ci = c[i], dfnx = dfn[x[i]];</span><br><span class="line"><span class="keyword">if</span>(s[ci].<span class="built_in">count</span>(dfnx)) <span class="keyword">return</span>;</span><br><span class="line">s[ci].<span class="built_in">insert</span>(dfnx), <span class="built_in">add</span>(dfnx, <span class="number">1</span>);</span><br><span class="line"><span class="keyword">auto</span> it = s[ci].<span class="built_in">find</span>(dfnx);</span><br><span class="line"><span class="keyword">int</span> pre = <span class="number">0</span>, suf = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(it != s[ci].<span class="built_in">begin</span>()) pre = *(--it), it++;</span><br><span class="line"><span class="keyword">if</span>(it != --s[ci].<span class="built_in">end</span>()) suf = *(++it), it--;</span><br><span class="line"><span class="keyword">if</span>(pre) <span class="built_in">upd</span>(pre, dfnx, <span class="number">-1</span>);</span><br><span class="line"><span class="keyword">if</span>(suf) <span class="built_in">upd</span>(suf, dfnx, <span class="number">-1</span>);</span><br><span class="line"><span class="keyword">if</span>(pre &amp;&amp; suf) <span class="built_in">upd</span>(pre, suf, <span class="number">1</span>);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<p>完整代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, q, k[N];</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> Seg &#123;</span><br><span class="line">    <span class="keyword">int</span> sz, T[N], c[N*<span class="number">20</span>], ls[N*<span class="number">20</span>], rs[N*<span class="number">20</span>];</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) &gt;&gt; 1)</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> lch l, mid, ls[o]</span></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">define</span> rch mid + 1, r, rs[o]</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> oo, <span class="keyword">int</span> p, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span>&amp; o)</span> </span>&#123;</span><br><span class="line">        c[o = ++sz] = c[oo] + <span class="number">1</span>, ls[o] = ls[oo], rs[o] = rs[oo];</span><br><span class="line">        <span class="keyword">if</span>(p &gt; mid) <span class="built_in">upd</span>(rs[oo], p, rch);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(l ^ r) <span class="built_in">upd</span>(ls[oo], p, lch);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">qry</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o, <span class="keyword">int</span> oo)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(l == r) <span class="keyword">return</span> k &gt; <span class="number">1</span> ? m : l;</span><br><span class="line">        <span class="keyword">int</span> cnt = c[ls[o]] - c[ls[oo]];</span><br><span class="line">        <span class="keyword">return</span> k &lt;= cnt ? <span class="built_in">qry</span>(k, lch, ls[oo]) : <span class="built_in">qry</span>(k - cnt, rch, rs[oo]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">upd</span>(T[t], p, <span class="number">0</span>, m, T[t+<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">qry</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">qry</span>(k, <span class="number">0</span>, m, T[r], T[l]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">namespace</span> Tree &#123;</span><br><span class="line">    <span class="keyword">int</span> idx, dfn[N], suf[N], rnk[N], d[N], fa[<span class="number">20</span>][N];</span><br><span class="line">    vector &lt;<span class="keyword">int</span>&gt; G[N]; </span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">        rnk[dfn[u] = ++idx] = u;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="number">19</span>) fa[i][u] = fa[i<span class="number">-1</span>][fa[i<span class="number">-1</span>][u]];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> v : G[u]) <span class="keyword">if</span>(v ^ fa[<span class="number">0</span>][u])</span><br><span class="line">            fa[<span class="number">0</span>][v] = u, d[v] = d[u] + <span class="number">1</span>, <span class="built_in">dfs</span>(v);</span><br><span class="line">        suf[u] = idx;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lca</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(d[u] &lt; d[v]) <span class="built_in">swap</span>(u, v);</span><br><span class="line">        <span class="built_in">per</span>(i, <span class="number">19</span>, <span class="number">0</span>) <span class="keyword">if</span>(d[u] - (<span class="number">1</span> &lt;&lt; i) &gt;= d[v]) u = fa[i][u];</span><br><span class="line">        <span class="keyword">if</span>(u == v) <span class="keyword">return</span> u;</span><br><span class="line">        <span class="built_in">per</span>(i, <span class="number">19</span>, <span class="number">0</span>) <span class="keyword">if</span>(fa[i][u] ^ fa[i][v]) u = fa[i][u], v = fa[i][v];</span><br><span class="line">        <span class="keyword">return</span> fa[<span class="number">0</span>][u];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> Max[N], R[N], x[N], c[N], g[N];</span><br><span class="line">    vector &lt;<span class="keyword">int</span>&gt; tim[N];</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pretreat</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cin &gt;&gt; m;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;x[i], &amp;c[i]), g[i] = c[i];</span><br><span class="line">            tim[dfn[x[i]]].<span class="built_in">push_back</span>(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">sort</span>(g + <span class="number">1</span>, g + m + <span class="number">1</span>);<span class="comment">//离散化颜色</span></span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, m) c[i] = <span class="built_in">lower_bound</span>(g + <span class="number">1</span>, g + m + <span class="number">1</span>, c[i]) - g;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">            R[i] = R[i<span class="number">-1</span>];<span class="comment">//R[i] 是 dfs 序为 i 的节点对应区间的右端点</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> t : tim[i]) Seg::<span class="built_in">upd</span>(t, R[i]), R[i]++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, n) Max[i] = Seg::<span class="built_in">qry</span>(k[i], R[dfn[i]<span class="number">-1</span>], R[suf[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> C[N];</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(; i &lt;= n; i += i &amp; -i) C[i] += v;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">qry</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> r = <span class="number">0</span>)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(; i; i &amp;= i - <span class="number">1</span>) r += C[i];</span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">Qry</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">qry</span>(suf[u]) - <span class="built_in">qry</span>(dfn[u] - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    set &lt;<span class="keyword">int</span>&gt; s[N];</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">add</span>(dfn[<span class="built_in">lca</span>(rnk[u], rnk[v])], x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ins</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;<span class="comment">//单点加球</span></span><br><span class="line">        <span class="keyword">int</span> ci = c[i], dfnx = dfn[x[i]];</span><br><span class="line">        <span class="keyword">if</span>(s[ci].<span class="built_in">count</span>(dfnx)) <span class="keyword">return</span>;</span><br><span class="line">        s[ci].<span class="built_in">insert</span>(dfnx), <span class="built_in">add</span>(dfnx, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">auto</span> it = s[ci].<span class="built_in">find</span>(dfnx);</span><br><span class="line">        <span class="keyword">int</span> pre = <span class="number">0</span>, suf = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(it != s[ci].<span class="built_in">begin</span>()) pre = *(--it), it++;</span><br><span class="line">        <span class="keyword">if</span>(it != --s[ci].<span class="built_in">end</span>()) suf = *(++it), it--;</span><br><span class="line">        <span class="keyword">if</span>(pre) <span class="built_in">upd</span>(pre, dfnx, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">if</span>(suf) <span class="built_in">upd</span>(suf, dfnx, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">if</span>(pre &amp;&amp; suf) <span class="built_in">upd</span>(pre, suf, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> x[N], u, v, ans[N]; vector &lt;<span class="keyword">int</span>&gt; id[N];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, n) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;u, &amp;v);</span><br><span class="line">        Tree::G[u].<span class="built_in">push_back</span>(v);</span><br><span class="line">        Tree::G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">    Tree::<span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;k[i]);</span><br><span class="line">    Tree::<span class="built_in">pretreat</span>();</span><br><span class="line">    cin &gt;&gt; q;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, q) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x[i]), id[Tree::Max[x[i]]].<span class="built_in">push_back</span>(i);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        Tree::<span class="built_in">ins</span>(i);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j : id[i]) ans[j] = Tree::<span class="built_in">Qry</span>(x[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, q) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/TC11351/" rel="prev" title="TheCowDivOne | TopCoder 11351">
+                  <i class="fa fa-chevron-left"></i> TheCowDivOne | TopCoder 11351
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ji-yu-stdstreambuf-de-fast-io-mo-ban/" rel="next" title="基于 std::streambuf 的 Fast IO 模板">
+                  基于 std::streambuf 的 Fast IO 模板 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

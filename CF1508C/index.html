@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题目链接 有一张 \(n\) 个点的无向完全图，其中 \(m\) 条边的边权已给定。 你需要给剩下的边确定边权，使得所有边的权值异或和为 \(0\)。 求出所有方案中最小生成树权值的最小值。 \(n \le 2 \cdot 10^5,m \le \min\{2 \cdot 10^5,\binom n2-1\}\)  下面原图指给定的 \(m\) 条边构成的图，补图指剩下的边构成的图，MST 指最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Complete the MST | Codeforces 1508C">
+<meta property="og:url" content="http://example.com/CF1508C/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="题目链接 有一张 \(n\) 个点的无向完全图，其中 \(m\) 条边的边权已给定。 你需要给剩下的边确定边权，使得所有边的权值异或和为 \(0\)。 求出所有方案中最小生成树权值的最小值。 \(n \le 2 \cdot 10^5,m \le \min\{2 \cdot 10^5,\binom n2-1\}\)  下面原图指给定的 \(m\) 条边构成的图，补图指剩下的边构成的图，MST 指最">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-17T07:05:41.000Z">
+<meta property="article:modified_time" content="2021-04-17T07:05:41.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="最小生成树">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/CF1508C/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/CF1508C/","path":"CF1508C/","title":"Complete the MST | Codeforces 1508C"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Complete the MST | Codeforces 1508C | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/CF1508C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Complete the MST | Codeforces 1508C
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-17 15:05:41" itemprop="dateCreated datePublished" datetime="2021-04-17T15:05:41+08:00">2021-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/CF1508C/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="CF1508C/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1508/problem/C">题目链接</a></p>
+<p>有一张 <span class="math inline">\(n\)</span> 个点的无向完全图，其中 <span class="math inline">\(m\)</span> 条边的边权已给定。</p>
+<p>你需要给剩下的边确定边权，使得<strong>所有边的权值</strong>异或和为 <span class="math inline">\(0\)</span>。</p>
+<p>求出所有方案中最小生成树权值的最小值。</p>
+<p><span class="math inline">\(n \le 2 \cdot 10^5,m \le \min\{2 \cdot 10^5,\binom n2-1\}\)</span></p>
+</blockquote>
+<p>下面<strong>原图</strong>指给定的 <span class="math inline">\(m\)</span> 条边构成的图，<strong>补图</strong>指剩下的边构成的图，<code>MST</code> 指最小生成树。</p>
+<blockquote>
+<p>引理：最优解中补图至多有一条权值非 <span class="math inline">\(0\)</span> 的边。</p>
+<p>证明：考虑两条补图边 <span class="math inline">\(e_1,e_2\)</span>，它们的权值 <span class="math inline">\(w_1,w_2\)</span> 都大于 <span class="math inline">\(0\)</span>。</p>
+<ul>
+<li>如果它们都不在 <code>MST</code> 上，把 <span class="math inline">\(e_1\)</span> 权值变为 <span class="math inline">\(0\)</span>，<span class="math inline">\(e_2\)</span> 权值异或上 <span class="math inline">\(e_1\)</span> 权值，新的 <code>MST</code> 不会变劣。</li>
+<li>如果它们都在 <code>MST</code> 上，把 <span class="math inline">\(e_1\)</span> 权值变为 <span class="math inline">\(0\)</span>，<span class="math inline">\(e_2\)</span> 权值异或上 <span class="math inline">\(e_1\)</span> 权值，因为 <span class="math inline">\(w_1 \oplus w_2 \le w_1 + w_2\)</span>，所以新的 <code>MST</code> 不会变劣。</li>
+<li>如果它们中的一条在 <code>MST</code> 上，一条不在，不妨设 <span class="math inline">\(e_1\)</span> 在 <code>MST</code> 上，把 <span class="math inline">\(e_1\)</span> 权值变为 <span class="math inline">\(0\)</span>，<span class="math inline">\(e_2\)</span> 权值异或上 <span class="math inline">\(e_1\)</span> 权值，新的 <code>MST</code> 不会变劣。</li>
+</ul>
+<p>综上，如果存在两条权值大于 <span class="math inline">\(0\)</span> 的边，把其中一条的权值变为 <span class="math inline">\(0\)</span>，新的 <code>MST</code> 不会变劣。</p>
+</blockquote>
+<p>所以补图中有一条<strong>特殊边</strong>的权值恰好为给定的 <span class="math inline">\(m\)</span> 条边的权值异或和，其余边的权值均为 <span class="math inline">\(0\)</span>。</p>
+<p>容易想到枚举一下特殊边在不在 <code>MST</code> 上。</p>
+<p>先用 <code>DFS</code> 求出补图的生成森林，用 <code>set</code> 优化枚举未访问的点可以做到 <span class="math inline">\(O(m\log n)\)</span> 的复杂度。</p>
+<p>如果补图中存在环，那么补图中一定有边不在 <code>MST</code> 上，故特殊边一定不在 <code>MST</code> 上。把求出的生成森林加入原图后，答案即为该图的最小生成树，复杂度 <span class="math inline">\(O(m\log m)\)</span>。</p>
+<p>如果不存在环，那么 <span class="math inline">\(n\)</span> 就是 <span class="math inline">\(O(\sqrt m)\)</span> 级别的，如果特殊边在 <code>MST</code> 上，直接用同样的做法；如果不在 <code>MST</code> 上，就需要枚举特殊边是哪一条，每次删去它再沿用以上做法，复杂度 <span class="math inline">\(O(m \log m + nm\alpha(n))\)</span>。一个优化：用原图的最小生成树替代原图，复杂度降为 <span class="math inline">\(O(m\log m + n^2\alpha(n))=O(m\log m)\)</span>。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">int</span> n, m, fa[N], xorsu, eid, tid;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> x ^ fa[x] ? fa[x] = <span class="built_in">find</span>(fa[x]) : x; &#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mrg</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>((u = <span class="built_in">find</span>(u)) ^ (v = <span class="built_in">find</span>(v))) <span class="keyword">return</span> fa[u] = v;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">vector &lt;<span class="keyword">int</span>&gt; G[N];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edge</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> u, v, w;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> edge&amp; b)<span class="keyword">const</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> w &lt; b.w;</span><br><span class="line">    &#125;</span><br><span class="line">&#125; e[N], t[N];</span><br><span class="line">set &lt;<span class="keyword">int</span>&gt; s;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    s.<span class="built_in">erase</span>(u);</span><br><span class="line">    <span class="built_in">For</span>(i, <span class="number">0</span>, G[u].<span class="built_in">size</span>() - <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> v = G[u][i], nxt = G[u][i + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">while</span>(!s.<span class="built_in">empty</span>() &amp;&amp; *s.<span class="built_in">rbegin</span>() &gt; v) &#123;</span><br><span class="line">            <span class="keyword">int</span> vv = *s.<span class="built_in">upper_bound</span>(v);</span><br><span class="line">            <span class="keyword">if</span>(vv &gt;= nxt) <span class="keyword">break</span>;</span><br><span class="line">            t[++tid] = &#123;u, vv&#125;, <span class="built_in">dfs</span>(vv);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;e[i].u, &amp;e[i].v, &amp;e[i].w), xorsu ^= e[i].w;</span><br><span class="line">        G[e[i].u].<span class="built_in">pb</span>(e[i].v), G[e[i].v].<span class="built_in">pb</span>(e[i].u);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) G[i].<span class="built_in">pb</span>(<span class="number">0</span>), G[i].<span class="built_in">pb</span>(n + <span class="number">1</span>), <span class="built_in">sort</span>(G[i].<span class="built_in">begin</span>(), G[i].<span class="built_in">end</span>()), s.<span class="built_in">insert</span>(i);</span><br><span class="line">    <span class="keyword">while</span>(!s.<span class="built_in">empty</span>()) <span class="built_in">dfs</span>(*s.<span class="built_in">begin</span>());</span><br><span class="line">    <span class="built_in">sort</span>(e + <span class="number">1</span>, e + m + <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) fa[i] = i;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) <span class="keyword">if</span>(<span class="built_in">mrg</span>(e[i].u, e[i].v)) e[++eid] = e[i];</span><br><span class="line">    <span class="keyword">if</span>(tid &lt; n * (n - <span class="number">1ll</span>) / <span class="number">2</span> - m) &#123;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, n) fa[i] = i;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, tid) <span class="built_in">mrg</span>(t[i].u, t[i].v);</span><br><span class="line">        ll as = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, eid) <span class="keyword">if</span>(<span class="built_in">mrg</span>(e[i].u, e[i].v)) as += e[i].w;</span><br><span class="line">        cout &lt;&lt; as;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        ll as = <span class="number">1e18</span>;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">0</span>, tid) &#123;</span><br><span class="line">            <span class="built_in">rep</span>(j, <span class="number">1</span>, n) fa[j] = j;</span><br><span class="line">            <span class="built_in">rep</span>(j, <span class="number">1</span>, tid) <span class="keyword">if</span>(j ^ i) <span class="built_in">mrg</span>(t[j].u, t[j].v);</span><br><span class="line">            ll su = i ? <span class="number">0</span> : xorsu;</span><br><span class="line">            <span class="built_in">rep</span>(j, <span class="number">1</span>, eid) <span class="keyword">if</span>(<span class="built_in">mrg</span>(e[j].u, e[j].v)) su += e[j].w;</span><br><span class="line">            as = <span class="built_in">min</span>(as, su);</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; as;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+              <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag"># 最小生成树</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/problem3/" rel="prev" title="一道题3">
+                  <i class="fa fa-chevron-left"></i> 一道题3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ren-yi-mo-shu-ntt/" rel="next" title="任意模数 NTT">
+                  任意模数 NTT <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

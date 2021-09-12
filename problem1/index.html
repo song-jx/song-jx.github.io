@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="给定一个长度为 \(n\) 的序列 \(a\)。有 \(q\) 次询问，每次给出区间 \([L,R]\) , 求 \(\max\limits_{L\le l&lt;r\le R}\dfrac{\sum_{i&#x3D;l}^ra_i}{r-l}\) \(n\le 10^5,q\le 3\cdot 10^4,|a_i|\le 10^6\)  先把原问题转化成斜率最大值。 记 \(s_i&#x3D;\sum_{j&#x3D;1}">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一道题1">
+<meta property="og:url" content="http://example.com/problem1/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="给定一个长度为 \(n\) 的序列 \(a\)。有 \(q\) 次询问，每次给出区间 \([L,R]\) , 求 \(\max\limits_{L\le l&lt;r\le R}\dfrac{\sum_{i&#x3D;l}^ra_i}{r-l}\) \(n\le 10^5,q\le 3\cdot 10^4,|a_i|\le 10^6\)  先把原问题转化成斜率最大值。 记 \(s_i&#x3D;\sum_{j&#x3D;1}">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/11/18/ncWZHmCtw2bokxX.png">
+<meta property="article:published_time" content="2021-03-13T14:29:46.000Z">
+<meta property="article:modified_time" content="2021-03-13T14:29:46.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="分块">
+<meta property="article:tag" content="斜率优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/18/ncWZHmCtw2bokxX.png">
+
+
+<link rel="canonical" href="http://example.com/problem1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/problem1/","path":"problem1/","title":"一道题1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一道题1 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/problem1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一道题1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 22:29:46" itemprop="dateCreated datePublished" datetime="2021-03-13T22:29:46+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%83%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">考试</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/problem1/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="problem1/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(a\)</span>。有 <span class="math inline">\(q\)</span> 次询问，每次给出区间 <span class="math inline">\([L,R]\)</span> ,</p>
+<p>求 <span class="math inline">\(\max\limits_{L\le l&lt;r\le R}\dfrac{\sum_{i=l}^ra_i}{r-l}\)</span></p>
+<p><span class="math inline">\(n\le 10^5,q\le 3\cdot 10^4,|a_i|\le 10^6\)</span></p>
+</blockquote>
+<p>先把原问题转化成斜率最大值。</p>
+<p>记 <span class="math inline">\(s_i=\sum_{j=1}^ia_j,\text{点}A_i(i,s_{i-1}),\text{点}B_i(i,s_i)\)</span></p>
+<p><span class="math inline">\(\text{原式}=\max\limits_{L\le i &lt; j\le R}\text{Slope}_{A_i,B_j}\)</span></p>
+<p>考虑 <span class="math inline">\(L=1,R=n\)</span> 时怎么做。</p>
+<ul>
+<li><p>从左往右依次扫描，同时维护 <span class="math inline">\(A\)</span> 类点的下凸包，每次二分求出 <span class="math inline">\(B_i\)</span> 过当前凸包上的切点。</p>
+<p>时间复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p></li>
+<li><p><strong>线性做法</strong>：单调队列维护 <span class="math inline">\(A\)</span> 类点的下凸包，一旦发现队首不是当前 <span class="math inline">\(B_i\)</span> 过当前凸包上的切点，就将队首弹出。</p>
+<p>这样做可能会导致之后的一些 <span class="math inline">\(B_i\)</span> 的切点被弹出而失去这些 <span class="math inline">\(B_i\)</span> 的最优解，但可以证明这样做不会错过<strong>全局最优解</strong>。</p>
+<p><strong>如图</strong>，扫描到 <span class="math inline">\(E\)</span> 时切点已经不是 <span class="math inline">\(A\)</span> 了，弹出 <span class="math inline">\(A\)</span> 后会导致扫到 <span class="math inline">\(F\)</span> 时失去最优解。</p>
+<p>但因为 <span class="math inline">\(F\)</span> 的切线是 <span class="math inline">\(AF\)</span>, 所以 <span class="math inline">\(\text{Slope}_{AF}&lt;\text{Slope}_{AB}&lt;\text{Slope}_{BE}\)</span>。</p>
+<p>故 <span class="math inline">\(AF\)</span> 劣于 <span class="math inline">\(BE\)</span>, <span class="math inline">\(A\)</span> 已经不可能更新最优解。</p>
+<p><img src="https://i.loli.net/2020/11/18/ncWZHmCtw2bokxX.png" /></p></li>
+</ul>
+<p>考虑分块，令 <span class="math inline">\(sz=\sqrt n\)</span>，每次查询分两类：</p>
+<ul>
+<li><p>当 <span class="math inline">\(A_i,B_j\)</span> 都在边角（在同一个块或不同块）中时，直接对所有边角使用线性做法求出这类最优解。</p></li>
+<li><p>当 <span class="math inline">\(A_i,B_j\)</span> 至少有一个在大块中时。</p>
+<p>预处理 <span class="math inline">\(pre_{i,j}=\max\limits_{sz\cdot i\le I&lt; J \le j}\text{Slope}_{A_I,B_J},suf_{i,j}=\max\limits_{j\le I&lt;J\le sz\cdot i}\text{Slope}_{A_I,B_J}\)</span></p>
+<p>预处理方式也使用线性做法。</p>
+<p>用 <span class="math inline">\(pre_{\lceil\frac L{sz}\rceil,R},suf_{\lfloor\frac R{sz}\rfloor,L}\)</span> 更新答案。</p></li>
+</ul>
+<p>综上，时间复杂度 <span class="math inline">\(O(n\sqrt n)\)</span>。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">100005</span>, M = <span class="number">125</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> c = <span class="built_in">getchar</span>(), r = <span class="number">0</span>, f = <span class="number">1</span>; </span><br><span class="line">    <span class="keyword">while</span>(c &lt; <span class="number">48</span>) &#123; <span class="keyword">if</span>(c == <span class="number">45</span>) f = <span class="number">-1</span>; c = <span class="built_in">getchar</span>(); &#125;</span><br><span class="line">    <span class="keyword">while</span>(c &gt; <span class="number">47</span>) r = r * <span class="number">10</span> + c - <span class="number">48</span>, c = <span class="built_in">getchar</span>();</span><br><span class="line">    <span class="keyword">return</span> r * f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> n, Q, sz; ll a[N], maU[M][N]; <span class="keyword">int</span> maD[M][N];<span class="comment">// U 后缀表示分子，D 后缀表示分母</span></span><br><span class="line"><span class="function">ll <span class="title">gcd</span><span class="params">(ll a, ll b)</span> </span>&#123; <span class="keyword">return</span> b ? <span class="built_in">gcd</span>(b, a % b) : a; &#125;</span><br><span class="line"><span class="keyword">int</span> l, r, x[N], D; ll y[N], U;<span class="comment">// U/D 是答案</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123; l = <span class="number">1</span>, r = <span class="number">0</span>, U = <span class="number">-1e9</span>, D = <span class="number">1</span>; &#125;<span class="comment">// 清空凸包</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">upd</span><span class="params">(ll u, <span class="keyword">int</span> d)</span> </span>&#123;<span class="comment">// 更新答案</span></span><br><span class="line">    <span class="keyword">if</span>(d &lt; <span class="number">0</span>) u = -u, d = -d;</span><br><span class="line">    <span class="keyword">if</span>(u * D &gt; U * d) U = u, D = d;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ins</span><span class="params">(<span class="keyword">int</span> X, ll Y)</span> </span>&#123;<span class="comment">// X 递增时维护的是下凸包，递减时维护的是上凸包</span></span><br><span class="line">    <span class="keyword">while</span>(l &lt; r &amp;&amp; (y[r] - y[r<span class="number">-1</span>]) * (X - x[r]) &gt;= (Y - y[r]) * (x[r] - x[r<span class="number">-1</span>])) r--;</span><br><span class="line">    x[++r] = X, y[r] = Y;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">qry</span><span class="params">(<span class="keyword">int</span> X, ll Y)</span> </span>&#123;<span class="comment">// 过该点作切线并更新答案</span></span><br><span class="line">    <span class="keyword">if</span>(l &gt; r) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">while</span>(l &lt; r &amp;&amp; (Y - y[l]) * (X - x[l+<span class="number">1</span>]) &lt;= (Y - y[l+<span class="number">1</span>]) * (X - x[l])) l++;</span><br><span class="line">    <span class="built_in">upd</span>(Y - y[l], X - x[l]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; Q, sz = <span class="built_in">sqrt</span>(n * <span class="number">7</span>);</span><br><span class="line">    <span class="built_in">For</span>(i, <span class="number">0</span>, n) a[i] = <span class="built_in">read</span>() + a[i<span class="number">-1</span>];</span><br><span class="line">    <span class="built_in">per</span>(i, (n - <span class="number">1</span>) / sz, <span class="number">0</span>) &#123; <span class="comment">// 为了压空间，pre, suf 数组合并成 ma 数组 </span></span><br><span class="line">        <span class="built_in">init</span>(); <span class="built_in">For</span>(j, i * sz, n) <span class="built_in">qry</span>(j, a[j]), maU[i][j] = U, maD[i][j] = D, <span class="built_in">ins</span>(j, a[j<span class="number">-1</span>]);</span><br><span class="line">        <span class="built_in">init</span>(); <span class="built_in">per</span>(j, i * sz, <span class="number">0</span>) <span class="built_in">qry</span>(j, a[j<span class="number">-1</span>]), maU[i][j] = U, maD[i][j] = D, <span class="built_in">ins</span>(j, a[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> L, R;</span><br><span class="line">    <span class="keyword">while</span>(Q--) &#123;</span><br><span class="line">        L = <span class="built_in">read</span>() - <span class="number">1</span>, R = <span class="built_in">read</span>() - <span class="number">1</span>, <span class="built_in">init</span>();</span><br><span class="line">        <span class="keyword">if</span>(L / sz ^ R / sz) &#123;</span><br><span class="line">            <span class="built_in">For</span>(i, L, L / sz * sz + sz) <span class="built_in">qry</span>(i, a[i]), <span class="built_in">ins</span>(i, a[i<span class="number">-1</span>]);</span><br><span class="line">            <span class="built_in">rep</span>(i, R / sz * sz, R) <span class="built_in">qry</span>(i, a[i]), <span class="built_in">ins</span>(i, a[i<span class="number">-1</span>]);</span><br><span class="line">            <span class="built_in">upd</span>(maU[(L+sz<span class="number">-1</span>)/sz][R], maD[(L+sz<span class="number">-1</span>)/sz][R]);</span><br><span class="line">            <span class="built_in">upd</span>(maU[R/sz][L], maD[R/sz][L]);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="built_in">rep</span>(i, L, R) <span class="built_in">qry</span>(i, a[i]), <span class="built_in">ins</span>(i, a[i<span class="number">-1</span>]);</span><br><span class="line">        ll d = <span class="built_in">gcd</span>(<span class="built_in">llabs</span>(U), D);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld/%lld\n&quot;</span>, U / d, D / d);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E5%88%86%E5%9D%97/" rel="tag"># 分块</a>
+              <a href="/tags/%E6%96%9C%E7%8E%87%E4%BC%98%E5%8C%96/" rel="tag"># 斜率优化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/CF493E/" rel="prev" title="Vasya and Polynomial | Codeforeces 493E">
+                  <i class="fa fa-chevron-left"></i> Vasya and Polynomial | Codeforeces 493E
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/problem2/" rel="next" title="一道题2">
+                  一道题2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

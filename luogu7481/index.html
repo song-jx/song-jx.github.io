@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题目链接 给定 \(n,m\)，保证 \(m \le n\)，设 \(f(a,b)&#x3D;\sum\limits_{i&#x3D;0}^b\binom bi\binom {n-i}a\)。 求 \(\bigoplus\limits_{a&#x3D;1}^m\bigoplus\limits_{b&#x3D;1}^m\left(f(a,b) \bmod 998244353\right)\)。 \(n \le 10^9,m \le 50">
+<meta property="og:type" content="article">
+<meta property="og:title" content="梦现时刻 | 洛谷 P7481">
+<meta property="og:url" content="http://example.com/luogu7481/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="题目链接 给定 \(n,m\)，保证 \(m \le n\)，设 \(f(a,b)&#x3D;\sum\limits_{i&#x3D;0}^b\binom bi\binom {n-i}a\)。 求 \(\bigoplus\limits_{a&#x3D;1}^m\bigoplus\limits_{b&#x3D;1}^m\left(f(a,b) \bmod 998244353\right)\)。 \(n \le 10^9,m \le 50">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-12T07:25:13.000Z">
+<meta property="article:modified_time" content="2021-04-12T07:25:13.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="数论">
+<meta property="article:tag" content="生成函数">
+<meta property="article:tag" content="递推">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/luogu7481/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/luogu7481/","path":"luogu7481/","title":"梦现时刻 | 洛谷 P7481"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>梦现时刻 | 洛谷 P7481 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">引理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E4%B8%80"><span class="nav-number">1.1.</span> <span class="nav-text">证明一：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%81%E6%98%8E%E4%BA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">证明二</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E8%A7%A3%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">两种解法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB-01-%E8%83%8C%E5%8C%85-dp"><span class="nav-number">2.1.</span> <span class="nav-text">类 01 背包 DP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%92%E6%8E%A8"><span class="nav-number">2.2.</span> <span class="nav-text">递推</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/luogu7481/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          梦现时刻 | 洛谷 P7481
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-12 15:25:13" itemprop="dateCreated datePublished" datetime="2021-04-12T15:25:13+08:00">2021-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B4%9B%E8%B0%B7%E6%9C%88%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">洛谷月赛</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/luogu7481/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="luogu7481/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7481">题目链接</a></p>
+<p>给定 <span class="math inline">\(n,m\)</span>，保证 <span class="math inline">\(m \le n\)</span>，设 <span class="math inline">\(f(a,b)=\sum\limits_{i=0}^b\binom bi\binom {n-i}a\)</span>。</p>
+<p>求 <span class="math inline">\(\bigoplus\limits_{a=1}^m\bigoplus\limits_{b=1}^m\left(f(a,b) \bmod 998244353\right)\)</span>。</p>
+<p><span class="math inline">\(n \le 10^9,m \le 5000\)</span></p>
+</blockquote>
+<h3 id="引理">引理</h3>
+<p><span class="math display">\[
+\sum_{a=0}^n f(a,b)x^a=(x+2)^b(x+1)^{n-b}
+\]</span></p>
+<h4 id="证明一">证明一：</h4>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{a=0}^n f(a,b)x^a\\
+&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\
+&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\
+&amp;=(x+2)^b(x+1)^{n-b}
+\end{aligned}
+\]</span></p>
+<h4 id="证明二">证明二</h4>
+<p>考虑 <span class="math inline">\(f(a,b)\)</span> 的组合意义：有 <span class="math inline">\(n\)</span> 个人，其中 <span class="math inline">\(b\)</span> 个人比较强，要选出两批人：</p>
+<ul>
+<li>先从比较强的 <span class="math inline">\(b\)</span> 个人中选出 <span class="math inline">\(i\)</span> 个人作为第一批。</li>
+<li>再从剩下的 <span class="math inline">\(n-i\)</span> 个人中选出 <span class="math inline">\(a\)</span> 个人作为第二批。</li>
+</ul>
+<p>因为要对 <span class="math inline">\(i \in [0,b]\)</span> 求和，所以 <span class="math inline">\(f(a,b)\)</span> 表示第一批的人数任意，第二批的人数为 <span class="math inline">\(a\)</span> 的方案数。</p>
+<p>换一个角度看这个方案数：设第二批的 <span class="math inline">\(a\)</span> 个人中有 <span class="math inline">\(x\)</span> 个人比较强，<span class="math inline">\(y\)</span> 个人不强（<span class="math inline">\(a=x+y\)</span>）。</p>
+<ul>
+<li><p>对于一个比较强的人，如果他入选第二批，方案数为 <span class="math inline">\(1\)</span>，否则他既可能入选第一批，也可能落选，方案数为 <span class="math inline">\(2\)</span>。</p>
+<p>因此比较强的 <span class="math inline">\(b\)</span> 个人入选的情况数的生成函数为 <span class="math inline">\((x+2)^b\)</span>。</p></li>
+<li><p>对于一个不强的人，如果他入选第二批，方案数为 <span class="math inline">\(1\)</span>，否则他落选了，方案数为 <span class="math inline">\(1\)</span>。</p>
+<p>因此不强的 <span class="math inline">\(n-b\)</span> 个人入选的情况数的生成函数为 <span class="math inline">\((x+1)^{n-b}\)</span>。</p></li>
+</ul>
+<p>综上，得到 <span class="math inline">\(\sum\limits_{a=0}^n f(a,b)x^a=(x+2)^b(x+1)^{n-b}\)</span>。</p>
+<h3 id="两种解法">两种解法</h3>
+<h4 id="类-01-背包-dp">类 01 背包 <code>DP</code></h4>
+<p>根据引理，有 <span class="math display">\[
+\sum_{a=0}^n f(a,b)x^a=\frac {x+2}{x+1}\sum_{a=0}^nf(a,b-1)x^a
+\]</span> 乘 <span class="math inline">\(x+2\)</span> 相当于添加一个物品，除以 <span class="math inline">\(x+1\)</span> 相当于删除一个物品，后者用可撤销背包解决。</p>
+<p>复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
+<h4 id="递推">递推</h4>
+<p>考虑 <span class="math display">\[
+\begin{aligned}
+&amp;[(x+2)^b(x+1)^{n-b}]&#39;\\
+&amp;=b(x+2)^{b-1}(x+1)^{n-b}+(x+2)^b(n-b)(x+1)^{n-b-1}\\
+&amp;=\dfrac{b(x+1)+(n-b)(x+2)}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
+&amp;=\dfrac{nx+2n-b}{(x+2)(x+1)}(x+2)^b(x+1)^{n-b}\\
+\end{aligned}
+\]</span> 两边同乘 <span class="math inline">\((x+2)(x+1)\)</span> 得： <span class="math display">\[
+(x+2)(x+1)[(x+2)^b(x+1)^{n-b}]&#39;=(nx+2n-b)(x+2)^b(x+1)^{n-b}
+\]</span> 提取 <span class="math inline">\(x^a\)</span> 系数： <span class="math display">\[
+\begin{aligned}
+&amp;(a-1)f(a-1,b)+3af(a,b)+2(a+1)f(a+1,b)\\
+&amp;=nf(a-1,b)+(2n-b)f(a,b)
+\end{aligned}
+\]</span> 整理得： <span class="math display">\[
+f(a+1,b)=\frac {(2n-b-3a)f(a,b)+(n-a+1)f(a-1,b)}{2(a+1)}
+\]</span> 进一步： <span class="math display">\[
+f(a,b)=\frac {(2n-b-3a+3)f(a-1,b)+(n-a+2)f(a-2,b)}{2a}
+\]</span> 对于 <span class="math inline">\(b \in [1,m]\)</span> 都递推一遍即可。</p>
+<p>复杂度 <span class="math inline">\(O(m^2)\)</span>。</p>
+<p>代码（类 01 背包 <code>DP</code>）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> P = <span class="number">998244353</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> inv[<span class="number">5005</span>], f[<span class="number">5005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    f[<span class="number">0</span>] = inv[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, m) inv[i] = (P - P / i) * inv[P % i] % P;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) f[i] = f[i - <span class="number">1</span>] * (n - i + <span class="number">1</span>) % P * inv[i] % P;</span><br><span class="line">    <span class="keyword">int</span> as = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        <span class="built_in">per</span>(j, m, <span class="number">0</span>) f[j] = (f[j] * <span class="number">2</span> + f[j - <span class="number">1</span>]) % P;</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">1</span>, m) as ^= f[j] = (f[j] + P - f[j - <span class="number">1</span>]) % P;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; as;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码（递推）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> P = <span class="number">998244353</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> inv[<span class="number">10005</span>], f[<span class="number">5005</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    inv[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, m * <span class="number">2</span>) inv[i] = (P - P / i) * inv[P % i] % P;</span><br><span class="line">    <span class="keyword">int</span> as = <span class="number">0</span>;</span><br><span class="line">    f[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        (f[<span class="number">0</span>] *= <span class="number">2</span>) %= P;</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">1</span>, m) as ^= f[j] = (((n * <span class="number">2</span> - i - j * <span class="number">3</span> + <span class="number">3</span>) * f[j - <span class="number">1</span>] + (n - j + <span class="number">2</span>) * f[j - <span class="number">2</span>]) % P * inv[j * <span class="number">2</span>] % P + P) % P;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; as;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+              <a href="/tags/%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0/" rel="tag"># 生成函数</a>
+              <a href="/tags/%E9%80%92%E6%8E%A8/" rel="tag"># 递推</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/luogu7482/" rel="prev" title="不条理狂诗曲 | 洛谷 P7482">
+                  <i class="fa fa-chevron-left"></i> 不条理狂诗曲 | 洛谷 P7482
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/problem3/" rel="next" title="一道题3">
+                  一道题3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

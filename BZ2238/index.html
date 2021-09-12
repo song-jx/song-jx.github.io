@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="题目链接 给出 \(n\) 个点，\(m\) 条边的无向带权图，\(q\) 次询问，询问在图中删掉一条边后的 \(\text{MST}\) 的边权和。询问独立。 \(n \leq 5 \times 10^4, m \leq 10^5\)。  记原图的 \(\text{MST} &#x3D; (E_{\text{MST}}, V_{\text{MST}})\)。 对于 \(e(u, v, w) \not \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mst | BZOJ 2238">
+<meta property="og:url" content="http://example.com/BZ2238/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="题目链接 给出 \(n\) 个点，\(m\) 条边的无向带权图，\(q\) 次询问，询问在图中删掉一条边后的 \(\text{MST}\) 的边权和。询问独立。 \(n \leq 5 \times 10^4, m \leq 10^5\)。  记原图的 \(\text{MST} &#x3D; (E_{\text{MST}}, V_{\text{MST}})\)。 对于 \(e(u, v, w) \not \">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-13T13:26:51.000Z">
+<meta property="article:modified_time" content="2021-03-13T13:26:51.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="最小生成树">
+<meta property="article:tag" content="倍增">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/BZ2238/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/BZ2238/","path":"BZ2238/","title":"Mst | BZOJ 2238"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Mst | BZOJ 2238 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/BZ2238/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mst | BZOJ 2238
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 21:26:51" itemprop="dateCreated datePublished" datetime="2021-03-13T21:26:51+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/BZOJ/" itemprop="url" rel="index"><span itemprop="name">BZOJ</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/BZ2238/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="BZ2238/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://darkbzoj.tk/problem/2238">题目链接</a><br />
+给出 <span class="math inline">\(n\)</span> 个点，<span class="math inline">\(m\)</span> 条边的无向带权图，<span class="math inline">\(q\)</span> 次询问，询问在图中删掉一条边后的 <span class="math inline">\(\text{MST}\)</span> 的边权和。询问独立。<br />
+<span class="math inline">\(n \leq 5 \times 10^4, m \leq 10^5\)</span>。</p>
+</blockquote>
+<p>记原图的 <span class="math inline">\(\text{MST} = (E_{\text{MST}}, V_{\text{MST}})\)</span>。</p>
+<p>对于 <span class="math inline">\(e(u, v, w) \not \in E_{\text{MST}}\)</span>（下文称为非树边），将它删去后显然不会对答案造成任何影响。</p>
+<p>对于 <span class="math inline">\(e(u, v, w) \in E_{\text{MST}}\)</span>（下文称为树边），将它删去后，为了使得点 <span class="math inline">\(u, v\)</span> 仍然连通，我们必须要找一条非树边代替之，且这条非树边 <span class="math inline">\(e&#39;(u&#39;, v&#39;, w&#39;)\)</span> 所连接的顶点 <span class="math inline">\((u&#39;, v&#39;)\)</span>，在 <span class="math inline">\(\text{MST}\)</span> 上的路径必定覆盖了 <span class="math inline">\((u, v)\)</span>。</p>
+<p>自然的，我们想到枚举每一条非树边，并将其所连接的两个节点在 <span class="math inline">\(\text{MST}\)</span> 上的路径中的所有树边更新。</p>
+<p>更具体的，记 <span class="math inline">\(f_e\)</span>（其中 <span class="math inline">\(e\)</span> 为一条树边）为能代替 <span class="math inline">\(e\)</span> 的非树边的最小权值。一开始 <span class="math inline">\(f_e = +\infty\)</span>。对于枚举到的非树边 <span class="math inline">\(e&#39;(u&#39;, v&#39;, w&#39;)\)</span>，更新所有 <span class="math inline">\(e \in E&#39;\)</span>（其中 <span class="math inline">\(E&#39;\)</span> 代表 <span class="math inline">\((u&#39;, v&#39;)\)</span> 在 <span class="math inline">\(\text{MST}\)</span> 上的路径）的 <span class="math inline">\(f_e \leftarrow \min(f_e, w&#39;)\)</span>。</p>
+<p>问题转化为如何维护这个过程。</p>
+<p>一个经典的解法是利用树链剖分与线段树，网络上大多数的题解也是如此。不过这样做的复杂度是 <span class="math inline">\(O(n \log^2 n)\)</span> 的，且代码长度较长。</p>
+<p>我们采用一种码量更少，复杂度更为优秀的 <span class="math inline">\(O(n \log n)\)</span> 算法，树上倍增来解决。</p>
+<p>记录倍增数组 <span class="math inline">\(\text{fa}(u, k)\)</span> 表示 <span class="math inline">\(u\)</span> 的 <span class="math inline">\(2^k\)</span> 级祖先。</p>
+<p>令标记 <span class="math inline">\(\text{tag}(u, k)\)</span> 表示从 <span class="math inline">\(u\)</span> 到其 <span class="math inline">\(2^k\)</span> 级祖先的链上被更新的延时标记。易知整个算法就是要回答 <span class="math inline">\(\text{tag}(u, 0)\)</span>。</p>
+<p>考虑倍增求 LCA 的过程，同样的，我们不断从 <span class="math inline">\(u&#39;, v&#39;\)</span> 向上跳，直到相遇，同时打上标记即可。</p>
+<p>最后将标记下传，即</p>
+<p><span class="math display">\[\text{tag}(u, i - 1) \leftarrow \min(\text{tag}(u, i - 1), \text{tag(u, i)})\\ \]</span> <span class="math display">\[\text{tag}(\text{fa}(u, i - 1), i - 1) \leftarrow \min(\text{tag}(\text{fa}(u, i - 1), i - 1), \text{tag}(u, i))\]</span></p>
+<p>感性理解起来就是将 <span class="math inline">\(u\)</span> 到 <span class="math inline">\(\text{fa}(u, i)\)</span> 的标记下传给上下两半。</p>
+<p>至此，对于删除树边 <span class="math inline">\(e(u, v, w)\)</span>，其答案为:</p>
+<p><span class="math display">\[
+\text{MST}_w - w + \text{tag}(u, 0)
+\]</span></p>
+<p>（这里我们假设 <span class="math inline">\(u\)</span> 在 <span class="math inline">\(\text{MST}\)</span> 上的深度更深一点）。</p>
+<p>代码实现上有一些区别。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> upd(a, b) a = min(a, b)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">5e4</span> + <span class="number">5</span>, MI = <span class="number">1e6</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* Nc = <span class="string">&quot;Not connected&quot;</span>;</span><br><span class="line"><span class="keyword">int</span> n, m, q, cnt, mst, head[N], d[N], fa[N][<span class="number">16</span>], tag[N][<span class="number">16</span>], dwn[N*<span class="number">2</span>], pr[N], w[N*<span class="number">2</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> u, v, w, id;</span><br><span class="line">    <span class="keyword">bool</span> <span class="keyword">operator</span> &lt;(<span class="keyword">const</span> Edge&amp; b)<span class="keyword">const</span> &#123; <span class="keyword">return</span> w &lt; b.w; &#125;</span><br><span class="line">&#125; E[N*<span class="number">2</span>];</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edge</span> &#123;</span> <span class="keyword">int</span> v, nxt, id; &#125; e[N*<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> x == pr[x] ? x : pr[x] = <span class="built_in">find</span>(pr[x]); &#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v, <span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">    e[++cnt] = (edge)&#123; v, head[u], id &#125;;</span><br><span class="line">    head[u] = cnt;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123; <span class="comment">// 求 d, fa, dwn 数组, dwn[i] 是第 i 条边的下端点 </span></span><br><span class="line">    d[u] = d[fa[u][<span class="number">0</span>]] + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="number">15</span>) fa[u][i] = fa[fa[u][i<span class="number">-1</span>]][i<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = head[u]; i; i = e[i].nxt) &#123;</span><br><span class="line">        <span class="keyword">int</span> v = e[i].v;</span><br><span class="line">        <span class="keyword">if</span>(v == fa[u][<span class="number">0</span>]) <span class="keyword">continue</span>;</span><br><span class="line">        fa[dwn[e[i].id] = v][<span class="number">0</span>] = u;</span><br><span class="line">        <span class="built_in">dfs</span>(v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v, <span class="keyword">int</span> w)</span> </span>&#123; <span class="comment">// 倍增打标记 </span></span><br><span class="line">    <span class="keyword">if</span>(d[u] &lt; d[v]) <span class="built_in">swap</span>(u, v);</span><br><span class="line">    <span class="built_in">per</span>(j, <span class="number">15</span>, <span class="number">0</span>) <span class="keyword">if</span>(d[u] - (<span class="number">1</span> &lt;&lt; j) &gt;= d[v])</span><br><span class="line">        <span class="built_in">upd</span>(tag[u][j], w), u = fa[u][j];</span><br><span class="line">    <span class="keyword">if</span>(u == v) <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">per</span>(j, <span class="number">15</span>, <span class="number">0</span>) <span class="keyword">if</span>(fa[u][j] != fa[v][j]) &#123;</span><br><span class="line">        <span class="built_in">upd</span>(tag[u][j], w), <span class="built_in">upd</span>(tag[v][j], w);</span><br><span class="line">        u = fa[u][j], v = fa[v][j];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">upd</span>(tag[u][<span class="number">0</span>], w); <span class="built_in">upd</span>(tag[v][<span class="number">0</span>], w);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        <span class="keyword">int</span> u, v; <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;u, &amp;v, &amp;w[i]);</span><br><span class="line">        E[i] = (Edge)&#123; u, v, w[i], i &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(E + <span class="number">1</span>, E + m + <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) pr[i] = i;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) &#123;</span><br><span class="line">        <span class="keyword">int</span> f1 = <span class="built_in">find</span>(E[i].u), f2 = <span class="built_in">find</span>(E[i].v);</span><br><span class="line">        <span class="keyword">if</span>(f1 == f2) <span class="keyword">continue</span>;</span><br><span class="line">        pr[f2] = f1; mst += E[i].w; </span><br><span class="line">        <span class="built_in">add</span>(E[i].u, E[i].v, E[i].id); <span class="built_in">add</span>(E[i].v, E[i].u, E[i].id);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;q);</span><br><span class="line">    <span class="keyword">if</span>(cnt / <span class="number">2</span> &lt; n - <span class="number">1</span>) &#123; <span class="keyword">while</span>(q--) <span class="built_in">puts</span>(Nc); <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">1</span>);</span><br><span class="line">    <span class="built_in">memset</span>(tag, <span class="number">0x3f</span>, <span class="keyword">sizeof</span> tag);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, m) <span class="keyword">if</span>(!dwn[E[i].id]) <span class="built_in">update</span>(E[i].u, E[i].v, E[i].w);</span><br><span class="line">    <span class="built_in">per</span>(i, <span class="number">15</span>, <span class="number">1</span>) <span class="built_in">rep</span>(j, <span class="number">1</span>, n) &#123; <span class="comment">// 标记下传到底 </span></span><br><span class="line">        <span class="built_in">upd</span>(tag[j][i<span class="number">-1</span>], tag[j][i]);</span><br><span class="line">        <span class="built_in">upd</span>(tag[fa[j][i<span class="number">-1</span>]][i<span class="number">-1</span>], tag[j][i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(q--) &#123;</span><br><span class="line">        <span class="keyword">int</span> T; <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line">        <span class="keyword">if</span>(!dwn[T]) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, mst);</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> ans = tag[dwn[T]][<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">if</span>(ans == <span class="number">0x3f3f3f3f</span>) <span class="built_in">puts</span>(Nc);</span><br><span class="line">            <span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, mst + ans - w[T]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE%E8%AE%BA/" rel="tag"># 图论</a>
+              <a href="/tags/%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" rel="tag"># 最小生成树</a>
+              <a href="/tags/%E5%80%8D%E5%A2%9E/" rel="tag"># 倍增</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Hello-world/" rel="prev" title="Hello World!">
+                  <i class="fa fa-chevron-left"></i> Hello World!
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/yi-yan/" rel="next" title="一言（持续更新）">
+                  一言（持续更新） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

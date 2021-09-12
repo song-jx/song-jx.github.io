@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="给定 \(n\) 个点的树。 当一些结点上的人开会时，会将满足以下条件的结点作为会议的候选结点：所有参会者到此结点的距离和最小。 对于每一个的 \(k \in [1,n]\)，求出所有可能的 \(k\) 个人的会议最多有多少个候选结点。 \(n \le 2 \cdot 10^5\)  这题告诉我们：涉及到 size 时可以考虑把重心作为树的重心有没有什么性质。 结论 \(1\)：当 \(k\)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Meetings 2 | JOISC2021 D3T3">
+<meta property="og:url" content="http://example.com/JOISC2021D3T3/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="给定 \(n\) 个点的树。 当一些结点上的人开会时，会将满足以下条件的结点作为会议的候选结点：所有参会者到此结点的距离和最小。 对于每一个的 \(k \in [1,n]\)，求出所有可能的 \(k\) 个人的会议最多有多少个候选结点。 \(n \le 2 \cdot 10^5\)  这题告诉我们：涉及到 size 时可以考虑把重心作为树的重心有没有什么性质。 结论 \(1\)：当 \(k\)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/03/22/cs9ZJOrImCibEAz.png">
+<meta property="article:published_time" content="2021-03-22T12:16:23.000Z">
+<meta property="article:modified_time" content="2021-03-22T12:16:23.000Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="数据结构">
+<meta property="article:tag" content="树的重心">
+<meta property="article:tag" content="树的直径">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/22/cs9ZJOrImCibEAz.png">
+
+
+<link rel="canonical" href="http://example.com/JOISC2021D3T3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/JOISC2021D3T3/","path":"JOISC2021D3T3/","title":"Meetings 2 | JOISC2021 D3T3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Meetings 2 | JOISC2021 D3T3 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E9%A2%98%E5%91%8A%E8%AF%89%E6%88%91%E4%BB%AC%E6%B6%89%E5%8F%8A%E5%88%B0-size-%E6%97%B6%E5%8F%AF%E4%BB%A5%E8%80%83%E8%99%91%E6%8A%8A%E9%87%8D%E5%BF%83%E4%BD%9C%E4%B8%BA%E6%A0%91%E7%9A%84%E9%87%8D%E5%BF%83%E6%9C%89%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E6%80%A7%E8%B4%A8"><span class="nav-number">1.</span> <span class="nav-text">这题告诉我们：涉及到 size 时可以考虑把重心作为树的重心有没有什么性质。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-1%E5%BD%93-k-%E4%B8%BA%E5%A5%87%E6%95%B0%E6%97%B6%E7%AD%94%E6%A1%88%E4%B8%BA-1"><span class="nav-number"></span> <span class="nav-text">结论 \(1\)：当 \(k\) 为奇数时，答案为 \(1\)。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-2%E5%BD%93-k-%E4%B8%BA%E5%81%B6%E6%95%B0%E6%97%B6%E6%89%80%E6%9C%89%E5%80%99%E9%80%89%E7%BB%93%E7%82%B9%E4%B8%80%E5%AE%9A%E6%98%AF%E4%B8%80%E6%9D%A1%E9%93%BE"><span class="nav-number"></span> <span class="nav-text">结论 \(2\)：当 \(k\) 为偶数时，所有候选结点一定是一条链。</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/JOISC2021D3T3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Meetings 2 | JOISC2021 D3T3
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-22 20:16:23" itemprop="dateCreated datePublished" datetime="2021-03-22T20:16:23+08:00">2021-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/JOISC/" itemprop="url" rel="index"><span itemprop="name">JOISC</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/JOISC2021D3T3/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="JOISC2021D3T3/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>给定 <span class="math inline">\(n\)</span> 个点的树。</p>
+<p>当一些结点上的人开会时，会将满足以下条件的结点作为会议的候选结点：所有参会者到此结点的距离和最小。</p>
+<p>对于每一个的 <span class="math inline">\(k \in [1,n]\)</span>，求出所有可能的 <span class="math inline">\(k\)</span> 个人的会议最多有多少个候选结点。</p>
+<p><span class="math inline">\(n \le 2 \cdot 10^5\)</span></p>
+</blockquote>
+<h4 id="这题告诉我们涉及到-size-时可以考虑把重心作为树的重心有没有什么性质">这题告诉我们：涉及到 <code>size</code> 时可以考虑把重心作为树的重心有没有什么性质。</h4>
+<h3 id="结论-1当-k-为奇数时答案为-1">结论 <span class="math inline">\(1\)</span>：当 <span class="math inline">\(k\)</span> 为奇数时，答案为 <span class="math inline">\(1\)</span>。</h3>
+<p>证明：</p>
+<p>设 <span class="math inline">\(f(u)\)</span> 表示删去 <span class="math inline">\(u\)</span> 后，每个连通块内关键结点（有参会者的结点）数量的最大值。</p>
+<p>假设 <span class="math inline">\(u\)</span> 是一个候选结点，那么 <span class="math inline">\(f(u) \le \lfloor \frac k2 \rfloor\)</span> ，否则可以找到一个与 <span class="math inline">\(u\)</span> 相邻的结点 <span class="math inline">\(v\)</span> 满足所在连通块大小大于 <span class="math inline">\(\lfloor \frac k2 \rfloor\)</span> ，不难发现 <span class="math inline">\(v\)</span> 比 <span class="math inline">\(u\)</span> 严格更优。</p>
+<p>因此任意一个不同于 <span class="math inline">\(u\)</span> 的结点 <span class="math inline">\(v\)</span> 必定满足 <span class="math inline">\(f(v) \ge k -f(u) &gt; \lfloor \frac k2 \rfloor\)</span>，所以 <span class="math inline">\(v\)</span> 一定不是候选结点。</p>
+<h3 id="结论-2当-k-为偶数时所有候选结点一定是一条链">结论 <span class="math inline">\(2\)</span>：当 <span class="math inline">\(k\)</span> 为偶数时，所有候选结点一定是一条链。</h3>
+<p>证明：</p>
+<p>若 <span class="math inline">\(u, v\)</span> 是不相邻两个结点，且都是候选结点。设边 <span class="math inline">\((u,v)\)</span> 两边的关键结点数量分别为 <span class="math inline">\(a,b\)</span>。</p>
+<p>则 <span class="math inline">\(a + b = k, a \le f(v) \le \frac k2,b \le f(u) \le \frac k2 \Rightarrow a = b = \frac k2\)</span>。</p>
+<p>所有平分 <span class="math inline">\(k\)</span> 个点的边 <span class="math inline">\((u,v)\)</span> 一定是一条链，如图。</p>
+<p><img src="https://i.loli.net/2021/03/22/cs9ZJOrImCibEAz.png" /></p>
+<p>至此，可以得到一个 <span class="math inline">\(O(n^2)\)</span> 做法：</p>
+<p>设 <span class="math inline">\(F(u,v)\)</span> 表示链 <span class="math inline">\(u - v\)</span> 两边的结点数的较小值。</p>
+<p>枚举一条链 <span class="math inline">\(u - v\)</span>，如果 <span class="math inline">\(F(u,v) \ge \frac k2\)</span>，那么可以在两边分别放 <span class="math inline">\(\frac k2\)</span> 参会者，就至少能得到链长个候选结点。<br />
+因此用链长更新 <span class="math inline">\(k=2F(u,v)\)</span> 时的答案。</p>
+<p>然后最仙的想法就是把树的重心作为根，然后对于任意一条链 <span class="math inline">\(u - v\)</span>，<span class="math inline">\(F(u,v) = \min\{size_u,size_v\}\)</span>，证明略（主要是分析深度递增型链）。</p>
+<p>从空集开始，把所有点按 <span class="math inline">\(size\)</span> 从大到小加入，动态维护当前树的直径 <span class="math inline">\(D\)</span>。</p>
+<p>若刚加入的点为 <span class="math inline">\(u\)</span>，那么就用 <span class="math inline">\(D\)</span> 更新 <span class="math inline">\(k=2size_u\)</span> 时的答案。</p>
+<p>动态维护树的直径的方法也很简单：设当前的直径的两个端点是 <span class="math inline">\(a, b\)</span>，加入结点 <span class="math inline">\(u\)</span> 后，如果直径改变，则要么是 <span class="math inline">\(u - a\)</span>，要么是 <span class="math inline">\(u - b\)</span>，算两次树上距离即可。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, sz[N], rt, d[N], fa[<span class="number">18</span>][N], ans[N];</span><br><span class="line">vector &lt;<span class="keyword">int</span>&gt; G[N], nds[N];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> fa)</span> </span>&#123;</span><br><span class="line">    sz[u] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ma = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v : G[u]) <span class="keyword">if</span>(v ^ fa)</span><br><span class="line">        <span class="built_in">dfs</span>(v, u), sz[u] += sz[v], ma = <span class="built_in">max</span>(ma, sz[v]);</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">max</span>(ma, n - sz[u]) &lt;= n / <span class="number">2</span>) rt = u;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Dfs</span><span class="params">(<span class="keyword">int</span> u)</span> </span>&#123;</span><br><span class="line">    sz[u] = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="number">17</span>) fa[i][u] = fa[i - <span class="number">1</span>][fa[i - <span class="number">1</span>][u]];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v : G[u]) <span class="keyword">if</span>(v ^ fa[<span class="number">0</span>][u])</span><br><span class="line">        fa[<span class="number">0</span>][v] = u, d[v] = d[u] + <span class="number">1</span>, <span class="built_in">Dfs</span>(v), sz[u] += sz[v];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dis</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(d[u] &lt; d[v]) <span class="built_in">swap</span>(u, v);</span><br><span class="line">    <span class="keyword">int</span> res = d[u] - d[v];</span><br><span class="line">    <span class="built_in">per</span>(i, <span class="number">17</span>, <span class="number">0</span>) <span class="keyword">if</span>(d[u] - (<span class="number">1</span> &lt;&lt; i) &gt;= d[v]) u = fa[i][u];</span><br><span class="line">    <span class="keyword">if</span>(u == v) <span class="keyword">return</span> res;</span><br><span class="line">    <span class="built_in">per</span>(i, <span class="number">17</span>, <span class="number">0</span>) <span class="keyword">if</span>(fa[i][u] ^ fa[i][v])</span><br><span class="line">        u = fa[i][u], v = fa[i][v], res += <span class="number">2</span> &lt;&lt; i;</span><br><span class="line">    <span class="keyword">return</span> res + <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="keyword">int</span> u, v;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, n) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;u, &amp;v);</span><br><span class="line">        G[u].<span class="built_in">push_back</span>(v), G[v].<span class="built_in">push_back</span>(u);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">dfs</span>(<span class="number">1</span>, <span class="number">0</span>), <span class="built_in">Dfs</span>(rt);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) nds[sz[i]].<span class="built_in">push_back</span>(i);</span><br><span class="line">    u = v = rt;</span><br><span class="line">    <span class="keyword">int</span> D = <span class="number">0</span>, d;</span><br><span class="line">    <span class="built_in">per</span>(i, n, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> x : nds[i]) &#123;</span><br><span class="line">            <span class="keyword">if</span>((d = <span class="built_in">dis</span>(x, u)) &gt; D) v = x, D = d;</span><br><span class="line">            <span class="keyword">if</span>((d = <span class="built_in">dis</span>(x, v)) &gt; D) u = x, D = d;</span><br><span class="line">        &#125;</span><br><span class="line">        ans[i] = D + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, i &amp; <span class="number">1</span> ? <span class="number">1</span> : ans[i / <span class="number">2</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="tag"># 数据结构</a>
+              <a href="/tags/%E6%A0%91%E7%9A%84%E9%87%8D%E5%BF%83/" rel="tag"># 树的重心</a>
+              <a href="/tags/%E6%A0%91%E7%9A%84%E7%9B%B4%E5%BE%84/" rel="tag"># 树的直径</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/JOI2021D1T3/" rel="prev" title="Food Court | JOISC2021 D1T3">
+                  <i class="fa fa-chevron-left"></i> Food Court | JOISC2021 D1T3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/CF845F/" rel="next" title="Guards In The Storehouse | Codeforces 845F">
+                  Guards In The Storehouse | Codeforces 845F <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">190k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:53</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>
