@@ -7,7 +7,7 @@ type: links
 <div class="firends-box">
 <a href="https://yijan.co/" target="_blank">
 <div class="firends-item">
-<img src="https://yijan.co/images/avatar.png" />
+<img src="yyh.png" />
 <div class="right">
 <div class="top">
     yyh
@@ -21,7 +21,7 @@ type: links
 
 <a href="https://www.cnblogs.com/Juanzhang/" target="_blank">
 <div class="firends-item">
-<img src="https://i.loli.net/2021/05/01/dJvI3FZwuQ47OrB.jpg" />
+<img src="cjz.png" />
 <div class="right">
 <div class="top">
     cjz
@@ -35,7 +35,7 @@ type: links
 
 <a href="https://4182543731.github.io/" target="_blank">
 <div class="firends-item">
-<img src="https://i.loli.net/2021/04/30/FMx12AHLwljPicy.jpg" />
+<img src="zjk.png" />
 <div class="right">
 <div class="top">
     zjk
@@ -49,7 +49,7 @@ type: links
 
 <a href="https://0x131cc05.github.io/" target="_blank">
 <div class="firends-item">
-<img src="https://0x131cc05.github.io/images/77041874_p0_master12001.jpg" />
+<img src="lsj.png" />
 <div class="right">
 <div class="top">
     lsj
@@ -63,7 +63,7 @@ type: links
 
 <a href="https://orzzh.icu/" target="_blank">
 <div class="firends-item">
-<img src="https://orzzh.icu/images/avatar.png?v=1615715430071" />
+<img src="zzh.png" />
 <div class="right">
 <div class="top">
     zzh
@@ -77,7 +77,7 @@ type: links
 
 <a href="https://blog.blackwhitetony.com/links.html" target="_blank">
 <div class="firends-item">
-<img src="http://cn.gravatar.com/avatar/864d6376afa29f55ef3b1bca33a8eca2?d=mm&amp;s=256" />
+<img src="wkm.png" />
 <div class="right">
 <div class="top">
     wkm
@@ -89,9 +89,9 @@ type: links
 </div>
 </a>
 
-<a href="https://www.cnblogs.com/KevinTalent" target="_blank">
+<a href="https://www.luogu.com.cn/blog/Talentkk/" target="_blank">
 <div class="firends-item">
-<img src="https://i.loli.net/2021/04/30/EXNkvFVu2L3ixSa.jpg" />
+<img src="gjh.png" />
 <div class="right">
 <div class="top">
     gjh
@@ -102,4 +102,19 @@ type: links
 </div>
 </div>
 </a>
+
+<a href="https://xxeray.gitlab.io/" target="_blank">
+<div class="firends-item">
+<img src="wcx.svg" />
+<div class="right">
+<div class="top">
+    wcx
+</div>
+<div class="bottom">
+    
+</div>
+</div>
+</div>
+</a>
+
 </div>
