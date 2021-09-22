@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","version":"8.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<meta name="description" content="URAL2118  给定前 \(k\) 个字母的 \(01\) 前缀编码（不存在一个编码是另一个编码的前缀）。 给定字符串 \(s\)，设其解码后的 \(01\) 串为 \(S\)，求最多能将 \(S\) 划分为多少段使得每一段都无法解码，无解输出 \(-1\)。 \(k \le 52, n\le 10^6\)  首先考虑两种特殊情况：  编码中既有 \(0\)，也有 \(1\)，那 \(S\)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每周日练习">
+<meta property="og:url" content="http://example.com/sundays/index.html">
+<meta property="og:site_name" content="platelet&#39;s blog">
+<meta property="og:description" content="URAL2118  给定前 \(k\) 个字母的 \(01\) 前缀编码（不存在一个编码是另一个编码的前缀）。 给定字符串 \(s\)，设其解码后的 \(01\) 串为 \(S\)，求最多能将 \(S\) 划分为多少段使得每一段都无法解码，无解输出 \(-1\)。 \(k \le 52, n\le 10^6\)  首先考虑两种特殊情况：  编码中既有 \(0\)，也有 \(1\)，那 \(S\)">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-09-17T08:27:28.000Z">
+<meta property="article:modified_time" content="2021-09-22T07:38:33.262Z">
+<meta property="article:author" content="platelet">
+<meta property="article:tag" content="platelet">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/sundays/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/sundays/","path":"sundays/","title":"每周日练习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>每周日练习 | platelet's blog</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">platelet's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">精于心，简于形</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-links"><a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-template"><a href="/template/" rel="section"><i class="fa fa-code fa-fw"></i>模板</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ural2118"><span class="nav-number">1.</span> <span class="nav-text">URAL2118</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graph-subpaths"><span class="nav-number">2.</span> <span class="nav-text">Graph Subpaths</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sol-1"><span class="nav-number">3.</span> <span class="nav-text">Sol 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sol-2"><span class="nav-number">4.</span> <span class="nav-text">Sol 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zoj3390"><span class="nav-number">5.</span> <span class="nav-text">ZOJ3390</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#izho-2020-d1t3"><span class="nav-number">6.</span> <span class="nav-text">IZhO 2020 D1T3</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baekjoonoj18733"><span class="nav-number">7.</span> <span class="nav-text">BaekjoonOJ18733</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#opencup11931"><span class="nav-number">8.</span> <span class="nav-text">OpenCup11931</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#baekjoonoj19394"><span class="nav-number">9.</span> <span class="nav-text">BaekjoonOJ19394</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#opencup747e"><span class="nav-number">10.</span> <span class="nav-text">OpenCup747E</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-overview">
+            <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="platelet"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">platelet</p>
+  <div class="site-description" itemprop="description">天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/sundays/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每周日练习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-17 16:27:28" itemprop="dateCreated datePublished" datetime="2021-09-17T16:27:28+08:00">2021-09-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-09-22 15:38:33" itemprop="dateModified" datetime="2021-09-22T15:38:33+08:00">2021-09-22</time>
+      </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/sundays/#SOHUCS" itemprop="discussionUrl">
+        <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="sundays/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>15k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>14 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="ural2118">URAL2118</h3>
+<blockquote>
+<p>给定前 <span class="math inline">\(k\)</span> 个字母的 <span class="math inline">\(01\)</span> 前缀编码（不存在一个编码是另一个编码的前缀）。</p>
+<p>给定字符串 <span class="math inline">\(s\)</span>，设其解码后的 <span class="math inline">\(01\)</span> 串为 <span class="math inline">\(S\)</span>，求最多能将 <span class="math inline">\(S\)</span> 划分为多少段使得每一段都无法解码，无解输出 <span class="math inline">\(-1\)</span>。</p>
+<p><span class="math inline">\(k \le 52, n\le 10^6\)</span></p>
+</blockquote>
+<p>首先考虑两种特殊情况：</p>
+<ul>
+<li>编码中既有 <span class="math inline">\(0\)</span>，也有 <span class="math inline">\(1\)</span>，那 <span class="math inline">\(S\)</span> 无论怎么划分都可以解码。</li>
+<li>编码中既没 <span class="math inline">\(0\)</span>，也没 <span class="math inline">\(1\)</span>，那么答案为 <span class="math inline">\(|S|\)</span>。</li>
+</ul>
+<p>剩下的情况为：有 <span class="math inline">\(0\)</span> 无 <span class="math inline">\(1\)</span> 和有 <span class="math inline">\(1\)</span> 无 <span class="math inline">\(0\)</span>，由于对称性，只考虑有 <span class="math inline">\(0\)</span> 无 <span class="math inline">\(1\)</span>。</p>
+<p>首先答案的上界为 <span class="math inline">\(1\)</span> 的个数，因为全 <span class="math inline">\(0\)</span> 的一段是可以被解码的。</p>
+<p>如果最后一位为 <span class="math inline">\(1\)</span>，那么在每个 <span class="math inline">\(1\)</span> 后面断开，就可以取到这个上界。</p>
+<p>如果最后一位为 <span class="math inline">\(0\)</span>，假设最后一段 <span class="math inline">\(T\)</span>，可以说明存在最优解满足 <span class="math inline">\(T\)</span> 前面是 <span class="math inline">\(1\)</span>：假设 <span class="math inline">\(T\)</span> 前面有 <strong>连续</strong> 的 <span class="math inline">\(x\)</span> 个 <span class="math inline">\(0\)</span>，前面总共有 <span class="math inline">\(y\)</span> 个 <span class="math inline">\(1\)</span>。那么答案的上界为 <span class="math inline">\(y+1\)</span>，把这 <span class="math inline">\(x\)</span> 个 <span class="math inline">\(0\)</span> 加入 <span class="math inline">\(T\)</span>，然后在 <span class="math inline">\(T\)</span> 前面的每个 <span class="math inline">\(1\)</span> 后面断开就可以到达这个上界。</p>
+<p>如果 <span class="math inline">\(T\)</span> 前面有 <span class="math inline">\(y\)</span> 个 <span class="math inline">\(1\)</span>，最大段数就是 <span class="math inline">\(y+1\)</span>，问题就是求最大的 <span class="math inline">\(y\)</span>，假设 <span class="math inline">\(T&#39;\)</span> 是最短的无法被解码的后缀，可以说明最大的 <span class="math inline">\(y\)</span> 等于 <span class="math inline">\(T&#39;\)</span> 前面 <span class="math inline">\(1\)</span> 的个数：由于 <span class="math inline">\(|T|\ge |T&#39;|\)</span>，所以 <span class="math inline">\(y\)</span> 不会超过 <span class="math inline">\(T&#39;\)</span> 前面 <span class="math inline">\(1\)</span> 的个数，另外，令 <span class="math inline">\(T=T&#39;前面极长的一段0+T&#39;\)</span>，<span class="math inline">\(y\)</span> 就可以取到这个上界。</p>
+<p>问题转化成了求 <span class="math inline">\(T&#39;\)</span>，那么 <span class="math inline">\(T&#39;\)</span> 的任何前缀都无法解码，否则 <span class="math inline">\(T&#39;\)</span> 不是最短的，记 <span class="math inline">\(suffix(i)\)</span> 表示 <span class="math inline">\(S\)</span> 长度为 <span class="math inline">\(i\)</span> 的后缀，问题就是依次判断 <span class="math inline">\(suffix(1),suffix(2),suffix(3),\cdots\)</span> 是否有前缀可以被解码，<code>AC</code> 自动机即可。</p>
+<p>复杂度 <span class="math inline">\(O(nk)\)</span>。</p>
+<h3 id="graph-subpaths">Graph Subpaths</h3>
+<blockquote>
+<p>没有提交地址。</p>
+<p>给定一张 <span class="math inline">\(n\)</span> 个点 <span class="math inline">\(m\)</span> 条边的有向无环图，再给定 <span class="math inline">\(k\)</span> 条路径，每条路径长度为 <span class="math inline">\(l_i\)</span>，一条合法路径不包含这 <span class="math inline">\(k\)</span> 条路径。</p>
+<p>对于 <span class="math inline">\(i \in [2,n]\)</span>，求 <span class="math inline">\(1\rightarrow i\)</span> 的合法路径条数。</p>
+<p><span class="math inline">\(n,m,\sum_{i=1}^kl_i \le 10^5\)</span></p>
+</blockquote>
+<h3 id="sol-1">Sol 1</h3>
+<p>首先把所有边反向，就转化成了求 <span class="math inline">\(i\rightarrow 1\)</span> 的合法路径条数。</p>
+<p>对于边 <span class="math inline">\((u,v)\)</span>，标记它的权值为 <span class="math inline">\(v\)</span>，设 <span class="math inline">\(T_i\)</span> 表示 <span class="math inline">\(i\rightarrow 1\)</span> 所有合法路径组成的 <code>trie</code>，考虑怎么按拓扑序求出每一个 <span class="math inline">\(T_u\)</span>，对于边 <span class="math inline">\((u,v)\)</span>，<span class="math inline">\(T_v\)</span> 是已经求过了，把 <span class="math inline">\(T_v\)</span> 复制到根的儿子，但这样会有一些以 <span class="math inline">\(u\)</span> 为起点的不合法路径，需要删除这些路径：从 <span class="math inline">\(T_u\)</span> 的根出发沿着不合法路径走，把以终点为根的子树删除即可。<span class="math inline">\(u\)</span> 的答案就是 <span class="math inline">\(T_u\)</span> 的叶子个数。</p>
+<p>由于 <span class="math inline">\(T_u\)</span> 非常大，当然不能直接存下来，可行的方法是用可持久化的 <code>trie</code>，对于边 <span class="math inline">\((u,v)\)</span>，只需要从 <span class="math inline">\(T_u\)</span> 的根向 <span class="math inline">\(T_v\)</span> 连一条边就行了，而不用复制整棵 <span class="math inline">\(T_v\)</span>，删除子树也只需要对路径上的结点建新版本。</p>
+<p>一个问题是儿子列表的维护，如果用链表维护的话，删除子树时新建的结点需要从原版本复制整个链表，复杂度可能达到 <span class="math inline">\(O(n^2)\)</span>。</p>
+<p>用主席树维护儿子列表就可以 <span class="math inline">\(O(n\log n)\)</span> 地新建结点。</p>
+<p>复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<h3 id="sol-2">Sol 2</h3>
+<p>对所有路径建 <code>AC</code> 自动机，不难想到一个 <span class="math inline">\(O(n^2)\)</span> 状态的 <code>DP</code>，设 <span class="math inline">\(f_{i,u}\)</span> 表示在原图中走到 <span class="math inline">\(i\)</span>，<code>AC</code> 自动机上走到 <code>u</code>，且没有经过 <code>AC</code> 自动机上终止结点的路径条数。</p>
+<p>由于 <code>AC</code> 自动机上的点对应唯一原图中的点的，所以 <code>DP</code> 状态定义成 <span class="math inline">\(f_u\)</span> 就可以转移了。</p>
+<p>由于建 <code>AC</code> 自动机需要主席树，复杂度 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<h3 id="zoj3390">ZOJ3390</h3>
+<blockquote>
+<p>对于两棵树 <span class="math inline">\(T_1,T_2\)</span>，定义 <span class="math inline">\(T_1+T_2\)</span> 表示把根合并，<span class="math inline">\(T_1\cdot T_2\)</span> 表示把 <span class="math inline">\(T_1\)</span> 中每个结点换成 <span class="math inline">\(T_2\)</span>，<span class="math inline">\(T_1=T_2\)</span> 表示树同构。</p>
+<p>给定树 <span class="math inline">\(A,B,C\)</span>，求 <span class="math inline">\(X,Y\)</span> 满足 <span class="math inline">\(AX+BY=C\)</span>。</p>
+<p><span class="math inline">\(|A|,|B|,|C| \le 10^5\)</span></p>
+</blockquote>
+<p>设 <span class="math inline">\(height(T)\)</span> 表示 <span class="math inline">\(T\)</span> 的树高（最深叶子到根的距离）。</p>
+<p>可以发现 <span class="math inline">\(height(T_1+T_2)=\max(height(T_1),height(T_2)),height(T_1\cdot T_2)=height(T_1)+height(T_2)\)</span>。</p>
+<p>那么 <span class="math inline">\(\max(height(A)+height(X),height(B)+height(Y))=height(C)\)</span>，假设 <span class="math inline">\(height(A)+height(X)=height(C)\)</span>（另一种情况是一样的）。</p>
+<p>这样就知道了 <span class="math inline">\(height(X)\)</span>，考虑怎么求 <span class="math inline">\(X\)</span>，很简单，假设 <span class="math inline">\(u\)</span> 为 <span class="math inline">\(C\)</span> 中最深叶子的 <span class="math inline">\(height(X)\)</span> 级祖先，以 <span class="math inline">\(u\)</span> 为根的子树就是 <span class="math inline">\(X\)</span>，这样就知道了 <span class="math inline">\(AX\)</span>，然后就可以求出 <span class="math inline">\(BY\)</span>，再用类似的方法就可以求出 <span class="math inline">\(Y\)</span> 了。</p>
+<p>虽然思路很简单，但是有一定实现难度，求 <span class="math inline">\(BY\)</span> 时树的“减法“，以及判定答案是否合法都需要用到树哈希。</p>
+<p>树哈希公式： <span class="math display">\[
+f_u=1+\sum_{v\in son(u)}f_v\cdot \text{prime}(size_v)
+\]</span> 其中 <span class="math inline">\(\text{prime}(i)\)</span> 表示第 <span class="math inline">\(i\)</span> 个质数。</p>
+<p><strong>注：</strong>对于两棵大小不同的树 <span class="math inline">\(T_1,T_2\)</span>，<span class="math inline">\(f_{T_1}=f_{T_2}\)</span> 是可能的，因此哈希应当和子树大小捆绑在一起。</p>
+<p><code>Generator</code> ：参数 <span class="math inline">\(T,A,B,C,D\)</span> 可调，分别表示数据组数和树 <span class="math inline">\(A,X,B,Y\)</span> 的大小。</p>
+<details>
+<summary>
+<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> eb emplace_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp make_pair</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fi first </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> se second</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(x) (x).begin(), (x).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SZ(x) int((x).size())</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) / 2)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lc o * 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rc o * 2 + 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lch l, mid, lc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rch mid + 1, r, rc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cmi(a, b) (a = min(a, b))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cma(a, b) (a = max(a, b))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lb lower_bound</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ub upper_bound</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> bs binary_search</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pop __builtin_popcount</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llpop __builtin_popcountll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ctz __builtin_ctz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llctz __builtin_ctzll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> clz __builtin_clz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llclz __builtin_clzll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> par __builtin_parity</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llpar __builtin_parityll</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="keyword">using</span> lf = <span class="keyword">double</span>;</span><br><span class="line"><span class="comment">// using P = pair&lt;int, int&gt;;</span></span><br><span class="line"><span class="keyword">using</span> V = vector&lt;<span class="keyword">int</span>&gt;;</span><br><span class="line"><span class="comment">// using cmp = complex&lt;lf&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">gen</span><span class="params">(ll x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> ll k = <span class="number">0x9ddfea08eb382d69</span>ull;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="number">3</span>) x *= k, x ^= x &gt;&gt; <span class="number">47</span>;</span><br><span class="line">    <span class="keyword">return</span> x * k;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">rnd</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> ll s = <span class="built_in">time</span>(<span class="number">0</span>) + (ll)<span class="keyword">new</span> <span class="keyword">char</span>;</span><br><span class="line">    <span class="keyword">return</span> (s += <span class="built_in">gen</span>(s)) &amp; INT_MAX;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">V <span class="title">tmul</span><span class="params">(V a, V b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = a.<span class="built_in">size</span>() - <span class="number">1</span>, m = b.<span class="built_in">size</span>() - <span class="number">1</span>, su = n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">2</span>, m) a.<span class="built_in">pb</span>(b[j] == <span class="number">1</span> ? i : b[j] + su - <span class="number">1</span>);</span><br><span class="line">        su += m - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">V <span class="title">tplus</span><span class="params">(V a, V b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = a.<span class="built_in">size</span>() - <span class="number">1</span>, m = b.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j, <span class="number">2</span>, m) a.<span class="built_in">pb</span>(b[j] == <span class="number">1</span> ? <span class="number">1</span> : b[j] + n - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">5</span>, A = <span class="number">5</span>, B = <span class="number">5</span>, C = <span class="number">5</span>, D = <span class="number">5</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> T = <span class="number">100000</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, T);</span><br><span class="line">    <span class="built_in">rep</span>(kase, <span class="number">1</span>, T) &#123;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="built_in">rnd</span>() % A + <span class="number">1</span>, b = <span class="built_in">rnd</span>() % B + <span class="number">1</span>, c = <span class="built_in">rnd</span>() % C + <span class="number">1</span>, d = <span class="built_in">rnd</span>() % D + <span class="number">1</span>;</span><br><span class="line">        V t1&#123;<span class="number">0</span>&#125;, t2&#123;<span class="number">0</span>&#125;, t3&#123;<span class="number">0</span>&#125;, t4&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">auto</span> get = [](V&amp; t, <span class="keyword">int</span> n) &#123; <span class="built_in">rep</span>(i, <span class="number">1</span>, n) t.<span class="built_in">pb</span>(i &gt; <span class="number">1</span> ? <span class="built_in">rnd</span>() % (i - <span class="number">1</span>) + <span class="number">1</span> : <span class="number">0</span>); &#125;;</span><br><span class="line">        <span class="built_in">get</span>(t1, a), <span class="built_in">get</span>(t2, b), <span class="built_in">get</span>(t3, c), <span class="built_in">get</span>(t4, d);</span><br><span class="line">        V t5 = <span class="built_in">tplus</span>(<span class="built_in">tmul</span>(t1, t2), <span class="built_in">tmul</span>(t3, t4));</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d %d %llu\n&quot;</span>, a, c, t5.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">auto</span> prt = [](V&amp; v) &#123; <span class="built_in">For</span>(i, <span class="number">1</span>, v.<span class="built_in">size</span>()) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, v[i]); <span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>); &#125;;</span><br><span class="line">        <span class="built_in">prt</span>(t1), <span class="built_in">prt</span>(t3), <span class="built_in">prt</span>(t5);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+<p><code>Special judge</code>：假设保存为 <code>checker.cpp</code>，编译后在命令行中使用：<code>checker &lt;input-file&gt; &lt;output-file&gt;</code>，答案正确返回值为 <span class="math inline">\(0\)</span>，否则返回值为 <span class="math inline">\(1\)</span>，输出为第一组出错的数据。</p>
+<details>
+<summary>
+<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> eb emplace_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp make_pair</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fi first </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> se second</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> all(x) (x).begin(), (x).end()</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SZ(x) int((x).size())</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) / 2)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lc o * 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rc o * 2 + 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lch l, mid, lc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rch mid + 1, r, rc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cmi(a, b) (a = min(a, b))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> cma(a, b) (a = max(a, b))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lb lower_bound</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ub upper_bound</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> bs binary_search</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pop __builtin_popcount</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llpop __builtin_popcountll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ctz __builtin_ctz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llctz __builtin_ctzll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> clz __builtin_clz</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llclz __builtin_clzll</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> par __builtin_parity</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> llpar __builtin_parityll</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"><span class="keyword">using</span> lf = <span class="keyword">double</span>;</span><br><span class="line"><span class="keyword">using</span> P = pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line"><span class="keyword">using</span> V = vector&lt;<span class="keyword">int</span>&gt;;</span><br><span class="line"><span class="comment">// using cmp = complex&lt;lf&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">5</span>, M = <span class="number">1299709</span>;</span><br><span class="line"><span class="keyword">int</span> f[M + <span class="number">5</span>], pid, prm[N];</span><br><span class="line"></span><br><span class="line"><span class="function">V <span class="title">tmul</span><span class="params">(V a, V b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = a.<span class="built_in">size</span>() - <span class="number">1</span>, m = b.<span class="built_in">size</span>() - <span class="number">1</span>, su = n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">        <span class="built_in">rep</span>(j, <span class="number">2</span>, m) a.<span class="built_in">pb</span>(b[j] == <span class="number">1</span> ? i : b[j] + su - <span class="number">1</span>);</span><br><span class="line">        su += m - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">V <span class="title">tplus</span><span class="params">(V a, V b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = a.<span class="built_in">size</span>() - <span class="number">1</span>, m = b.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(j, <span class="number">2</span>, m) a.<span class="built_in">pb</span>(b[j] == <span class="number">1</span> ? <span class="number">1</span> : b[j] + n - <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> a;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">P <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> u, <span class="keyword">const</span> V G[])</span> </span>&#123;</span><br><span class="line">    <span class="function">P <span class="title">re</span><span class="params">(<span class="number">1</span>, <span class="number">1</span>)</span></span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> v : G[u]) &#123;</span><br><span class="line">        <span class="keyword">auto</span> [h, sz] = <span class="built_in">dfs</span>(v, G);</span><br><span class="line">        re.fi = (re.fi + (ll)h * prm[sz]) % <span class="number">999999937</span>;</span><br><span class="line">        re.se += sz;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> re;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Hash</span><span class="params">(<span class="keyword">const</span> V&amp; t)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="keyword">int</span>&gt; G[N];</span><br><span class="line">    <span class="built_in">For</span>(i, <span class="number">1</span>, t.<span class="built_in">size</span>()) G[t[i]].<span class="built_in">pb</span>(i);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">dfs</span>(<span class="number">1</span>, G).fi;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(FILE* f)</span> </span>&#123; <span class="keyword">int</span> x; <span class="keyword">return</span> <span class="built_in">fscanf</span>(f, <span class="string">&quot;%d&quot;</span>, &amp;x) == <span class="number">1</span> ? x : <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, M) &#123;</span><br><span class="line">        <span class="keyword">if</span>(!f[i]) prm[++pid] = i;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; i * prm[j] &lt;= M; j++) &#123;</span><br><span class="line">            f[i * prm[j]] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(i % prm[j] == <span class="number">0</span>) <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    FILE *in = <span class="built_in">fopen</span>(argv[<span class="number">1</span>], <span class="string">&quot;r&quot;</span>), *out = <span class="built_in">fopen</span>(argv[<span class="number">2</span>], <span class="string">&quot;r&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> T = <span class="built_in">read</span>(in); T--;) &#123;</span><br><span class="line">        V t1&#123;<span class="number">0</span>&#125;, t2&#123;<span class="number">0</span>&#125;, t3&#123;<span class="number">0</span>&#125;, t4&#123;<span class="number">0</span>&#125;, t5&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">auto</span> get = [](FILE* f, V&amp; t, <span class="keyword">int</span> n) &#123; <span class="built_in">rep</span>(i, <span class="number">1</span>, n) t.<span class="built_in">pb</span>(<span class="built_in">read</span>(f)); &#125;;</span><br><span class="line">        <span class="keyword">int</span> a = <span class="built_in">read</span>(in), b = <span class="built_in">read</span>(in), c = <span class="built_in">read</span>(in);</span><br><span class="line">        <span class="built_in">get</span>(in, t1, a), <span class="built_in">get</span>(in, t3, b), <span class="built_in">get</span>(in, t5, c);</span><br><span class="line">        <span class="keyword">int</span> d = <span class="built_in">read</span>(out), e = <span class="built_in">read</span>(out);</span><br><span class="line">        <span class="keyword">auto</span> err = [&amp;]() &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;1\n%d %d %d\n&quot;</span>, a, b, c);</span><br><span class="line">            <span class="built_in">rep</span>(i, <span class="number">1</span>, a) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, t1[i]); <span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">            <span class="built_in">rep</span>(i, <span class="number">1</span>, b) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, t3[i]); <span class="built_in">puts</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">            <span class="built_in">rep</span>(i, <span class="number">1</span>, c) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, t5[i]);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span>(!~d) <span class="built_in">err</span>();</span><br><span class="line">        <span class="built_in">get</span>(out, t2, d), <span class="built_in">get</span>(out, t4, e);</span><br><span class="line">        <span class="keyword">if</span>((ll)a * d + (ll)b * e != c &amp;&amp; <span class="built_in">Hash</span>(<span class="built_in">tplus</span>(<span class="built_in">tmul</span>(t1, t2), <span class="built_in">tmul</span>(t3, t4))) != <span class="built_in">Hash</span>(t5)) <span class="built_in">err</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="izho-2020-d1t3">IZhO 2020 D1T3</h3>
+<blockquote>
+<p><a href="codeforces.com/group/Uo1lq8ZyWf/contest/265564">题目链接</a></p>
+<p>给定长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>，问有多少三元组 <span class="math inline">\((i,j,k)\)</span> 满足 <span class="math inline">\(i\le j&lt;k\)</span> 且 <span class="math inline">\([i,j]\)</span> 和 <span class="math inline">\([j+1,k]\)</span> 两个区间中数的集合相同。</p>
+<p><span class="math inline">\(n \le 2\cdot 10^5\)</span></p>
+</blockquote>
+<p>记 <span class="math inline">\(prev_i\)</span> 表示 <span class="math inline">\(A_i\)</span> 上一次出现的位置，<span class="math inline">\(next_i\)</span> 表示 <span class="math inline">\(A_i\)</span> 下一次出现的位置。</p>
+<p>三元组 <span class="math inline">\((i,j,k)\)</span> 合法的充要条件为：</p>
+<ul>
+<li>区间 <span class="math inline">\([j+1,k]\)</span> 中的数都在 <span class="math inline">\([i,j]\)</span> 中出现，即 <span class="math inline">\(i \le \min prev_{j+1\cdots i}\)</span>，相当于 <span class="math inline">\(i\)</span> 有个上界 <span class="math inline">\(R_{j,k}=\min prev_{j+1\cdots k}\)</span>。</li>
+<li>区间 <span class="math inline">\([i,j]\)</span> 中的数都在 <span class="math inline">\([j+1,k]\)</span> 中出现，即 <span class="math inline">\(\max next_{i\cdots j}\le k\)</span>，相当于 <span class="math inline">\(i\)</span> 有个下界 <span class="math inline">\(L_{j,k}\)</span>，其中 <span class="math inline">\(L_{j,k}\)</span> 是最小的 <span class="math inline">\(i\)</span> 满足 <span class="math inline">\(\max next_{i\cdots j}\le k\)</span>。</li>
+</ul>
+<p>那么 <span class="math inline">\((j,k)\)</span> 的贡献就是 <span class="math inline">\(\max(R_{j,k}-L_{j,k}+1,0)\)</span>，考虑只枚举 <span class="math inline">\(k\)</span>，用数据结构动态维护 <span class="math inline">\(\sum_{j=1}^{k-1}\max(R_{j,k}-L_{j,k}+1,0)\)</span>。</p>
+<p>先考虑 <span class="math inline">\(L_{j,k}\)</span> 和 <span class="math inline">\(R_{j,k}\)</span> 分别怎么维护。</p>
+<p>对于 <span class="math inline">\(R_{j,k}=\min prev_{j+1\cdots k}\)</span>，这是 <span class="math inline">\(prev\)</span> 数组上的后缀 <span class="math inline">\(\min\)</span>，当 <span class="math inline">\(k\rightarrow k+1\)</span> 时，<span class="math inline">\(R_{j,k}\)</span> 发生的改变是一个后缀变成了 <span class="math inline">\(prev_{k+1}\)</span>，具体可以用单调栈求出这个后缀，然后区间赋值。</p>
+<p>对于 <span class="math inline">\(L_{j,k}\)</span>，直接分析 <span class="math inline">\(k\rightarrow k+1\)</span> 不太行，换一个角度考虑对于一个 <span class="math inline">\(j\)</span>，<span class="math inline">\(L_{j,k}\)</span> 和 <span class="math inline">\(k\)</span> 的关系，<span class="math inline">\(\max next_{i\cdots j}\)</span> 是 <span class="math inline">\(next\)</span> 数组上的后缀 <span class="math inline">\(\max\)</span>，将 <span class="math inline">\(next_{1\cdots j}\)</span> 依次插入单调栈，设单调栈中元素分别为 <span class="math inline">\(next_{i_1},next_{i_2},next_{i_3},\cdots,next_{i_k}\)</span>：</p>
+<ul>
+<li>当 <span class="math inline">\(k\in[j+1,next_{i_k}-1]\)</span> 时，<span class="math inline">\(L_{j,k}=\infty\)</span>。</li>
+<li>当 <span class="math inline">\(k\in [next_{i_k},next_{i_{k-1}-1}]\)</span>，<span class="math inline">\(L_{j,k}=i_{k-1}+1\)</span>。</li>
+<li><span class="math inline">\(\cdots\)</span></li>
+<li>当 <span class="math inline">\(k\in [next_{i_1},n]\)</span>，<span class="math inline">\(L_{j,k}=1\)</span>。</li>
+</ul>
+<p>综上，单调栈元素 <span class="math inline">\(i_x\)</span> 意味着当 <span class="math inline">\(k\in [next_{i_x},next_{i_{x-1}}-1]\)</span>，<span class="math inline">\(L_{j,k}=i_{x-1}+1\)</span>，假设插入 <span class="math inline">\(next_y\)</span> 后 <span class="math inline">\(next_{i_x}\)</span> 被弹掉了，那么当 <span class="math inline">\(j\in [i_x,y-1],k\in [next_{i_x},next_{i_{x-1}}-1]\)</span> 时，<span class="math inline">\(L_{j,k}=i_{x-1}+1\)</span>，相当于 <span class="math inline">\(k\)</span> 从 <span class="math inline">\(next_{i_x}-1\rightarrow next_{i_x}\)</span> 时，对 <span class="math inline">\(L_{i_x\cdots y-1,k}\)</span> 进行区间赋值为 <span class="math inline">\(i_x+1\)</span>。每个单调栈元素意味着一次区间赋值，所以只需要 <span class="math inline">\(n\)</span> 次区间赋值就可以维护 <span class="math inline">\(L_{j,k}\)</span>。</p>
+<p>但维护的是 <span class="math inline">\(\sum_{j=1}^{k-1}\max(R_{j,k}-L_{j,k}+1,0)\)</span>，相当于夹在两条递增折线之间的面积。由于 <span class="math inline">\(L_{j,k}\)</span> 和 <span class="math inline">\(R_{j,k}\)</span> 都是随着 <span class="math inline">\(k\)</span> 增大而减小的，所以每次赋值都是减小。比如将 <span class="math inline">\(R_{l\cdots r,k}\)</span> 改为 <span class="math inline">\(v\)</span>，如果 <span class="math inline">\(v \le \min L_{l\cdots r,k}\)</span>，这一段的面积就是 <span class="math inline">\(0\)</span>，如果 <span class="math inline">\(v \ge \max L_{l\cdots r,k}\)</span>，这一段的面积就是 <span class="math inline">\(\sum_{j=l}^rR_{j,k}-\sum_{j=l}^rL_{j,k}+(r-l+1)\)</span>，否则可以二分一个分界点 <span class="math inline">\(x\)</span>，使得 <span class="math inline">\(\forall j \in[l,x], v\ge L_{j,k},\forall j\in[x+1,r],v\le L_{j,k}\)</span>，分界点左右两段分别对应上述两种情况。所以只要维护了 <span class="math inline">\(L_{j,k},R_{j,k}\)</span> 的区间 <span class="math inline">\(\min,\max\)</span> 和 <span class="math inline">\(sum\)</span> 就可以维护 <span class="math inline">\(\sum_{j=1}^{k-1}\max(R_{j,k}-L_{j,k}+1,0)\)</span> 了。</p>
+<p>在实现上并不需要求 <span class="math inline">\(x\)</span>，假设当前要将 <span class="math inline">\(L_{ql\cdots qr,k}\)</span> 赋值为 <span class="math inline">\(v\)</span>，当前线段树结点区间为 <span class="math inline">\([l,r]\)</span>，一般区间赋值是在 <span class="math inline">\(ql\le l\land r \le qr\)</span> 时停止递归，这里把条件改成 <span class="math inline">\(ql\le l\land r \le qr \land (v \le \min L_{l\cdots r,k}\lor v \ge \max L_{l\cdots r,k})\)</span> 才可以方便地维护 <span class="math inline">\(\sum_{j=1}^{k-1}\max(R_{j,k}-L_{j,k}+1,0)\)</span>，由于只有一个分界点，所以复杂度不变。</p>
+<p>复杂度 <span class="math inline">\(O(n\log n)\)</span>，实现难度较大，附上代码：</p>
+<details>
+<summary>
+<span style="font-size: large; font-weight: bold; color: rgb(33,150,243);">查看代码</span>
+</summary>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> eb emplace_back</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mid ((l + r) / 2)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lc o * 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rc o * 2 + 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> lch l, mid, lc</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rch mid + 1, r, rc</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> ll = <span class="keyword">long</span> <span class="keyword">long</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, a[N], pre[N], nxt[N], L[N];</span><br><span class="line">vector&lt;tuple&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; vl[N], vr[N];</span><br><span class="line"><span class="keyword">int</span> tagL[N * <span class="number">4</span>], minL[N * <span class="number">4</span>], maxL[N * <span class="number">4</span>];</span><br><span class="line"><span class="keyword">int</span> tagR[N * <span class="number">4</span>], minR[N * <span class="number">4</span>], maxR[N * <span class="number">4</span>];</span><br><span class="line">ll sum[N * <span class="number">4</span>], sumL[N * <span class="number">4</span>], sumR[N * <span class="number">4</span>], as;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushUp</span><span class="params">(<span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    sum[o] = sum[lc] + sum[rc];</span><br><span class="line">    sumL[o] = sumL[lc] + sumL[rc];</span><br><span class="line">    sumR[o] = sumR[lc] + sumR[rc];</span><br><span class="line">    minL[o] = <span class="built_in">min</span>(minL[lc], minL[rc]);</span><br><span class="line">    minR[o] = <span class="built_in">min</span>(minR[lc], minR[rc]);</span><br><span class="line">    maxL[o] = <span class="built_in">max</span>(maxL[lc], maxL[rc]);</span><br><span class="line">    maxR[o] = <span class="built_in">max</span>(maxR[lc], maxR[rc]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushL</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    tagL[o] = minL[o] = maxL[o] = v, sumL[o] = v * (r - l + <span class="number">1ll</span>);</span><br><span class="line">    sum[o] = <span class="built_in">max</span>(sumR[o] - sumL[o], <span class="number">0ll</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushR</span><span class="params">(<span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    tagR[o] = minR[o] = maxR[o] = v, sumR[o] = v * (r - l + <span class="number">1ll</span>);</span><br><span class="line">    sum[o] = <span class="built_in">max</span>(sumR[o] - sumL[o], <span class="number">0ll</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pushDown</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(~tagL[o]) <span class="built_in">pushL</span>(tagL[o], lch), <span class="built_in">pushL</span>(tagL[o], rch), tagL[o] = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(~tagR[o]) <span class="built_in">pushR</span>(tagR[o], lch), <span class="built_in">pushR</span>(tagR[o], rch), tagR[o] = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updL</span><span class="params">(<span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R &amp;&amp; (v &lt;= minR[o] || v &gt;= maxR[o])) <span class="keyword">return</span> <span class="built_in">pushL</span>(v, l, r, o);</span><br><span class="line">    <span class="built_in">pushDown</span>(l, r, o);</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= mid) <span class="built_in">updL</span>(L, R, v, lch);</span><br><span class="line">    <span class="keyword">if</span>(R &gt; mid) <span class="built_in">updL</span>(L, R, v, rch);</span><br><span class="line">    <span class="built_in">pushUp</span>(o);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updR</span><span class="params">(<span class="keyword">int</span> L, <span class="keyword">int</span> R, <span class="keyword">int</span> v, <span class="keyword">int</span> l, <span class="keyword">int</span> r, <span class="keyword">int</span> o)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= l &amp;&amp; r &lt;= R &amp;&amp; (v &gt;= maxL[o] || v &lt;= minL[o])) <span class="keyword">return</span> <span class="built_in">pushR</span>(v, l, r, o);</span><br><span class="line">    <span class="built_in">pushDown</span>(l, r, o);</span><br><span class="line">    <span class="keyword">if</span>(L &lt;= mid) <span class="built_in">updR</span>(L, R, v, lch);</span><br><span class="line">    <span class="keyword">if</span>(R &gt; mid) <span class="built_in">updR</span>(L, R, v, rch);</span><br><span class="line">    <span class="built_in">pushUp</span>(o);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) L[i] = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) pre[i] = L[a[i]], L[a[i]] = i;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) L[i] = n + <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">per</span>(i, n, <span class="number">1</span>) nxt[i] = L[a[i]], L[a[i]] = i;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, n) &#123;</span><br><span class="line">        <span class="keyword">int</span>&amp; j = L[i] = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(; j &amp;&amp; pre[j] &gt;= pre[i]; j = L[j]);</span><br><span class="line">        vr[i].<span class="built_in">eb</span>(<span class="built_in">max</span>(j, <span class="number">1</span>), i - <span class="number">1</span>, pre[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, n) &#123;</span><br><span class="line">        <span class="keyword">int</span>&amp; j = L[i] = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(; j &amp;&amp; nxt[j] &lt;= nxt[i]; j = L[j])</span><br><span class="line">            vl[nxt[j]].<span class="built_in">eb</span>(<span class="built_in">max</span>(j, <span class="number">1</span>), i - <span class="number">1</span>, L[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">mem</span>(tagL, <span class="number">63</span>), <span class="built_in">mem</span>(tagR, <span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> [l, r, v] : vl[i]) <span class="built_in">updL</span>(l, r, v, <span class="number">1</span>, n, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> [l, r, v] : vr[i]) <span class="built_in">updR</span>(l, r, v, <span class="number">1</span>, n, <span class="number">1</span>);</span><br><span class="line">        as += sum[<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; as;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+<h3 id="baekjoonoj18733">BaekjoonOJ18733</h3>
+<blockquote>
+<p>给定 <span class="math inline">\(n\)</span> 个数 <span class="math inline">\(a_i\)</span>，要把它们放进 <span class="math inline">\(k\)</span> 个有标号的盒子中，要求每个盒子非空。</p>
+<p>每个盒子的价值为盒内所有数的按位与，要最大化所有数的价值，同时求达到最大值的方案数。</p>
+<p><span class="math inline">\(k \le n \le 10^5,0\le a_i \le 10^9\)</span></p>
+</blockquote>
+<p>如果所有 <span class="math inline">\(a_i=0\)</span>，那么方案数为 <span class="math inline">\(k!{n\brace k}\)</span>。</p>
+<p>假设所有 <span class="math inline">\(a_i\)</span> 在二进制下最高位为 <span class="math inline">\(b\)</span>，可以证明最优的策略一定会最大化价值在第 <span class="math inline">\(b\)</span> 位为 <span class="math inline">\(1\)</span> 的盒子数量，分以下几种情况考虑：</p>
+<ul>
+<li>所有 <span class="math inline">\(a_i\)</span> 在第 <span class="math inline">\(b\)</span> 位为 <span class="math inline">\(1\)</span>，那么所有方案都会有 <span class="math inline">\(k\cdot 2^k\)</span> 的贡献，把所有 <span class="math inline">\(a_i\)</span> 减去 <span class="math inline">\(2^b\)</span> 继续做。</li>
+<li>有 <span class="math inline">\(x\)</span> 个 <span class="math inline">\(a_i\)</span> 在第 <span class="math inline">\(b\)</span> 位为 <span class="math inline">\(1\)</span>。如果 <span class="math inline">\(x&lt;k\)</span>，那么这 <span class="math inline">\(x\)</span> 个 <span class="math inline">\(a_i\)</span> 会一对一地放进 <span class="math inline">\(x\)</span> 个盒子中，其他的 <span class="math inline">\(a_i\)</span> 放进剩余的 <span class="math inline">\(k-x\)</span> 个盒子中，所有方案都会有 <span class="math inline">\(x\cdot 2^k\)</span> 的贡献，方案数乘上 <span class="math inline">\(\binom kx\)</span>。</li>
+<li>如果 <span class="math inline">\(x\ge k\)</span>，那么其他的 <span class="math inline">\(a_i\)</span> 一定放在同一个盒子中，所有方案都会有 <span class="math inline">\((k-1)\cdot 2^k\)</span> 的贡献，把第 <span class="math inline">\(b\)</span> 位为 <span class="math inline">\(1\)</span> 的 <span class="math inline">\(a_i\)</span> 减去 <span class="math inline">\(2^b\)</span>，把所有第 <span class="math inline">\(b\)</span> 位为 <span class="math inline">\(0\)</span> 的 <span class="math inline">\(a_i\)</span> 替换成它们的按位与。</li>
+</ul>
+<p>这样递归做下去，即可 <span class="math inline">\(O(n\log V)\)</span> 地求出答案。</p>
+<h3 id="opencup11931">OpenCup11931</h3>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://official.contest.yandex.ru/opencupXIX/contest/11931/problems/D/?lang=en">题目链接</a> <a target="_blank" rel="noopener" href="https://official.contest.yandex.ru/opencupXIX/contest/11931/run-report/52963174/">提交记录</a></p>
+<p>维护一个长度为 <span class="math inline">\(2^p\)</span> 的数组 <span class="math inline">\(A\)</span>（下标从 <span class="math inline">\(0\)</span> 开始），支持五种操作：</p>
+<ul>
+<li><p><span class="math inline">\(A_v\)</span> 增加 <span class="math inline">\(\delta\)</span>。</p></li>
+<li><p>查询 <span class="math inline">\(\sum_{i=l}^rA_i\)</span>。</p></li>
+<li><p>给定 <span class="math inline">\(k\)</span>，<span class="math inline">\(\forall i \in [0,2^p)\)</span>，满足 <span class="math inline">\(i\text{ and } k\ne i\)</span>，将 <span class="math inline">\(A_{i\text{ and }k}\)</span> 加上 <span class="math inline">\(A_i\)</span>，然后令 <span class="math inline">\(A_i=0\)</span>。</p></li>
+<li><p>给定 <span class="math inline">\(k\)</span>，<span class="math inline">\(\forall i \in [0,2^p)\)</span>，满足 <span class="math inline">\(i\text{ or } k\ne i\)</span>，将 <span class="math inline">\(A_{i\text{ or }k}\)</span> 加上 <span class="math inline">\(A_i\)</span>，然后令 <span class="math inline">\(A_i=0\)</span>。</p></li>
+<li><p>给定 <span class="math inline">\(k\)</span>，<span class="math inline">\(\forall i \in [0,2^p)\)</span>，满足 <span class="math inline">\(i\text{ xor } k\ne i\)</span>，将 <span class="math inline">\(A_{i\text{ xor }k}\)</span> 加上 <span class="math inline">\(A_i\)</span>，然后令 <span class="math inline">\(A_i=0\)</span>。</p></li>
+</ul>
+<p><span class="math inline">\(p\le 19,v,k&lt; 2^p,A_i,\delta \le 10^9\)</span></p>
+</blockquote>
+<p>先分析反复进行后三种操作后对 <span class="math inline">\(A\)</span> 的影响是怎样的，对于一个 <span class="math inline">\(A_i\)</span>，假如它最终加到了 <span class="math inline">\(A_j\)</span> 上（<span class="math inline">\(A_i\)</span> 不变认为 <span class="math inline">\(i=j\)</span>），那么 <span class="math inline">\(j\)</span> 是把 <span class="math inline">\(i\)</span> 的某些位赋为 <span class="math inline">\(0\)</span>，某些位赋为 <span class="math inline">\(1\)</span>，某些位 <span class="math inline">\(01\)</span> 翻转得到的，不难用 <span class="math inline">\(tag_0,tag_1,tag_f\)</span> 三个状压标记来表示后三种操作的影响。</p>
+<p>考虑用 <code>0-1 trie</code> 维护这个序列，每个结点维护 <span class="math inline">\(tag_0(u),tag_1(u),tag_f(u)\)</span> 三个懒标记，问题是怎么下放标记，假设当前要将结点 <span class="math inline">\(u\)</span> 上的标记下放。</p>
+<p>首先需要将标记传给左右儿子，对于儿子 <span class="math inline">\(v\)</span>，它按如下方式接受 <span class="math inline">\(tag_0(u),tag_1(u),tag_f(u)\)</span> 对它的影响：</p>
+<ul>
+<li><p><span class="math inline">\(tag_0(v)=tag_0(v)\cup tag_0(u),tag_1(v)=tag_1(v)\setminus tag_0(u),tag_f(v)=tag_f(v)\setminus tag_0(u)\)</span>。</p></li>
+<li><p><span class="math inline">\(tag_1(u)\)</span> 类似。</p></li>
+<li><p>设 <span class="math inline">\(x=tag_0(v)\cap tag_f(u),y=tag_1(v)\cap tag_f(u)\)</span>，那么 <span class="math inline">\(tag_0(v)=(tag_0(v)\setminus x)\cap y,tag_1(v)=(tag_1(v)\setminus y)\cap x,tag_f(v)=(tag_f(v)\cap tag_f(u))\setminus x\setminus y\)</span>。</p></li>
+</ul>
+<p>用位运算可以做到 <span class="math inline">\(O(1)\)</span>。</p>
+<p>另外还要考虑标记对点 <span class="math inline">\(u\)</span> 自己的影响，设点 <span class="math inline">\(u\)</span> 对应第 <span class="math inline">\(d\)</span> 位，分三种情况：</p>
+<ul>
+<li>如果 <span class="math inline">\(tag_0(u)\)</span> 包含第 <span class="math inline">\(d\)</span> 位，需要将 <span class="math inline">\(u\)</span> 的右子树合并到左子树去。</li>
+<li>如果 <span class="math inline">\(tag_1(u)\)</span> 包含第 <span class="math inline">\(d\)</span> 位，需要将 <span class="math inline">\(u\)</span> 的左子树合并到右子树去。</li>
+<li>如果 <span class="math inline">\(tag_f(u)\)</span> 包含第 <span class="math inline">\(d\)</span> 位，需要将 <span class="math inline">\(u\)</span> 的左右子树交换。</li>
+</ul>
+<p>交换左右子树是容易的，将以 <span class="math inline">\(v\)</span> 为根的子树合并到以 <span class="math inline">\(u\)</span> 为根的子树可以像线段树合并一样做：</p>
+<ul>
+<li><p>如果 <span class="math inline">\(u,v\)</span> 中有一个是空的，就返回。</p></li>
+<li><p>否则下放 <span class="math inline">\(u,v\)</span> 的标记，然后分别合并 <span class="math inline">\(u,v\)</span> 的左右儿子，并删除 <span class="math inline">\(v\)</span>。</p></li>
+</ul>
+<p>由于第二种情况每发生一次就会删一个结点，所以复杂度均摊是 <span class="math inline">\(O(p)\)</span> 的。</p>
+<p>对于单点加和区间查询，像普通线段树一样做就行了，注意由于子树合并会删除结点，所以单点加的时候如果遇到了不存在的结点时需要动态开点。</p>
+<p>复杂度 <span class="math inline">\(O(p2^p)\)</span>。</p>
+<h3 id="baekjoonoj19394">BaekjoonOJ19394</h3>
+<blockquote>
+<p>给定一张 <span class="math inline">\(n\)</span> 个点 <span class="math inline">\(m\)</span> 条边的无向图，定义一个边的子集是好的当且仅当仅保留这些边时，每个点的度数为偶数。</p>
+<p>问所有好的边集的边数平方和。</p>
+<p><span class="math inline">\(n,m\le 2\cdot 10^5\)</span></p>
+</blockquote>
+<p>下面称合法边集为欧拉子图。</p>
+<p>首先欧拉子图的数量是多少？答案是 <span class="math inline">\(2^{m-n+c}\)</span>，其中 <span class="math inline">\(c\)</span> 是连通块数。考虑求出图的一个生成森林，那么有 <span class="math inline">\(m-n+c\)</span> 条非树边，每条非树边和它两个端点的树上路径构成一个基环，从这些基环中选若干个异或起来就能得到一张欧拉子图，同时任意一张欧拉子图一定是若干基环异或起来的。</p>
+<p>假设一张欧拉子图有 <span class="math inline">\(x\)</span> 条边，它的贡献 <span class="math inline">\(x^2=2\binom x2+x\)</span>，<span class="math inline">\(x\)</span> 可以考虑每条边的贡献，<span class="math inline">\(\binom x2\)</span> 可以考虑每对边的贡献。</p>
+<ul>
+<li>一条边 <span class="math inline">\(e\)</span> 的贡献。如果 <span class="math inline">\(e\)</span> 是割边，那么它没有贡献，否则贡献等于删掉它后的欧拉子图数量 <span class="math inline">\(2^{m-1-n+c}\)</span>。</li>
+<li>一对边 <span class="math inline">\(e_1,e_2\)</span> 的贡献。如果 <span class="math inline">\(e_1,e_2\)</span> 中有割边，那么没有贡献，否则贡献等于删掉它们后的欧拉子图数量，如果 <span class="math inline">\(e_1,e_2\)</span> 是割集，贡献为 <span class="math inline">\(2^{m-1-n+c}\)</span>，否则为 <span class="math inline">\(2^{m-2-n+c}\)</span>。</li>
+</ul>
+<p>因此问题是数有多少对非割边是割集，用数据结构当然是可以做的，但有一个优秀做法。</p>
+<p>判断 <span class="math inline">\(k\)</span> 条边是否组成割集有如下算法：</p>
+<ul>
+<li>求出生成树，给每非树边随机一个 <span class="math inline">\([0,2^{64})\)</span> 内的权值。</li>
+<li>每条树边的权值等于所有覆盖它的非树边的权值的异或和，割边权值为 <span class="math inline">\(0\)</span>。</li>
+<li><span class="math inline">\(k\)</span> 条边组成割集当前仅当其中一些边的异或和为 <span class="math inline">\(0\)</span>。</li>
+</ul>
+<p>这个条件是割集的充分条件，有 <span class="math inline">\(2^{k-64}\)</span> 的概率误判成割集，但用来数两条边的割集是很难出错的，可以认为两条非割边组成割集当且仅当两条边权值相等。</p>
+<p>直接统计有多少对边权值相等就行了，复杂度 <span class="math inline">\(O(n\log n)\)</span> 或 <span class="math inline">\(O(n)\)</span>（哈希表）。</p>
+<h3 id="opencup747e">OpenCup747E</h3>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://official.contest.yandex.ru/opencupXVIII/contest/5917/problems/E/?success=53051713&amp;lang=en">题目链接</a> <a target="_blank" rel="noopener" href="https://official.contest.yandex.ru/opencupXVIII/contest/5917/run-report/53051713/">提交记录</a></p>
+<p>给定字符串 <span class="math inline">\(s,t\)</span>，每次可以删除 <span class="math inline">\(s\)</span> 中一个字符 <span class="math inline">\(c\)</span> 的第一次出现或最后一次出现，删除代价取决于删除字符的初始位置。</p>
+<p><span class="math inline">\(|s|,|t| \le 2\cdot 10^5\)</span></p>
+</blockquote>
+<p>先考虑一个 <span class="math inline">\(O(n^2)\)</span> 的 <code>DP</code>，设 <span class="math inline">\(f_{i,j}\)</span> 表示使 <span class="math inline">\(s_{1\cdot i}\)</span> 和 <span class="math inline">\(t_{1\cdots j}\)</span> 相等的最小代价，转移为：</p>
+<ul>
+<li><span class="math inline">\(f_{i,j}\rightarrow f_{i-1,j-1}(s_i=t_j)\)</span>。</li>
+<li><span class="math inline">\(f_{i,j}\rightarrow f_{i-1,j}(t_{1\cdots j} 或 t_{j+1\cdots |t|} 中没有字符s_i)\)</span>。</li>
+</ul>
+<p>设 <span class="math inline">\(first(c)\)</span> 表示字符 <span class="math inline">\(c\)</span> 在 <span class="math inline">\(t\)</span> 中第一次出现的位置，<span class="math inline">\(last(c)\)</span> 表示最后一次出现的位置，那么转移二的条件可以改写为 <span class="math inline">\(j&lt;first(s_i)\lor j\ge last(s_i)\)</span>。</p>
+<p>当 <span class="math inline">\(j\ne first(s_i)\land j\ne last(s_i)\)</span> 时两种转移只能选择一种，考虑从这里优化。</p>
+<p>把所有的 <span class="math inline">\(first(c),last(c)\)</span> 标记为关键值，那么最多有 <span class="math inline">\(52\)</span> 个关键值，考虑只计算 <span class="math inline">\(j\)</span> 为关键值的 <span class="math inline">\(f_{i,j}\)</span>，设 <span class="math inline">\(j\)</span> 之后的一个关键值为 <span class="math inline">\(j&#39;\)</span>，先从 <span class="math inline">\(f_{*,j}\)</span> 转移到 <span class="math inline">\(f_{*,j&#39;-1}\)</span>，在这一过程，<span class="math inline">\(s\)</span> 中一些字符必须进行转移一，其他字符必须进行转移二，因此一个 <span class="math inline">\(f_{i,j}\)</span> 最多能转移到一个的 <span class="math inline">\(f_{i&#39;,j&#39;-1}\)</span>，具体转移到哪一个 <span class="math inline">\(i&#39;\)</span> 可以通过 KMP 算出，然后再从 <span class="math inline">\(f_{*,j&#39;-1}\)</span> 转移到 <span class="math inline">\(f_{*,j&#39;}\)</span></p>
+<p>复杂度 <span class="math inline">\(O(26n)\)</span>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/solutions/" rel="prev" title="部分题解合集">
+                  <i class="fa fa-chevron-left"></i> 部分题解合集
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/exams/" rel="next" title="考试题">
+                  考试题 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="SOHUCS"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">platelet</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">197k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:59</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js","integrity":"sha256-r+3itOMtGGjap0x+10hu6jW/gZCzxHsoKrOd7gyRSGY="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="changyan" type="application/json">{"enable":true,"appid":"cyvEvVbLv","appkey":"5ad530a5ec52a4592621eb7b7437748c"}</script>
+<script src="/js/third-party/comments/changyan.js"></script>
+
+</body>
+</html>

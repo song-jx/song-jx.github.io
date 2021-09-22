@@ -163,7 +163,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,410 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/luogu7481/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/luogu7481/" class="post-title-link" itemprop="url">梦现时刻 | 洛谷 P7481</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-12 15:25:13" itemprop="dateCreated datePublished" datetime="2021-04-12T15:25:13+08:00">2021-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B4%9B%E8%B0%B7%E6%9C%88%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">洛谷月赛</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/luogu7481/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/luogu7481/" class="cy_cmt_count" data-xid="luogu7481/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7481">题目链接</a></p>
+<p>给定 <span class="math inline">\(n,m\)</span>，保证 <span class="math inline">\(m \le n\)</span>，设 <span class="math inline">\(f(a,b)=\sum\limits_{i=0}^b\binom bi\binom {n-i}a\)</span>。</p>
+<p>求 <span class="math inline">\(\bigoplus\limits_{a=1}^m\bigoplus\limits_{b=1}^m\left(f(a,b) \bmod 998244353\right)\)</span>。</p>
+<p><span class="math inline">\(n \le 10^9,m \le 5000\)</span></p>
+</blockquote>
+<h3 id="引理">引理</h3>
+<p><span class="math display">\[
+\sum_{a=0}^n f(a,b)x^a=(x+2)^b(x+1)^{n-b}
+\]</span></p>
+<h4 id="证明一">证明一：</h4>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{a=0}^n f(a,b)x^a\\
+&amp;=\sum_{a=0}^n\sum\limits_{i=0}^b\binom bi\binom {n-i}ax^a\\
+&amp;=\sum_{i=0}^b\binom bi\sum_{a=0}^n\binom {n-i}ax^a\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{n-i}\\
+&amp;=\sum_{i=0}^b\binom bi(x+1)^{b-i}(x+1)^{n-b}\\
+&amp;=(x+2)^b(x+1)^{n-b}
+\end{aligned}
+\]</span></p>
+<h4 id="证明二">证明二</h4>
+<p>考虑 <span class="math inline">\(f(a,b)\)</span> 的组合意义：有 <span class="math inline">\(n\)</span> 个人，其中 <span class="math inline">\(b\)</span> 个人比较强，要选出两批人：</p>
+<ul>
+<li>先从比较强的 <span class="math inline">\(b\)</span> 个人中选出 <span class="math inline">\(i\)</span> 个人作为第一批。</li>
+<li>再从剩下的 <span class="math inline">\(n-i\)</span> 个人中选出 <span class="math inline">\(a\)</span> 个人作为第二批。</li>
+</ul>
+<p>因为要对 <span class="math inline">\(i \in [0,b]\)</span> 求和，所以 <span class="math inline">\(f(a,b)\)</span> 表示第一批的人数任意，第二批的人数为 <span class="math inline">\(a\)</span> 的方案数。</p>
+<p>换一个角度看这个方案数：设第二批的 <span class="math inline">\(a\)</span> 个人中有 <span class="math inline">\(x\)</span> 个人比较强，<span class="math inline">\(y\)</span> 个人不强（<span class="math inline">\(a=x+y\)</span>）。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/luogu7481/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/luogu7482/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/luogu7482/" class="post-title-link" itemprop="url">不条理狂诗曲 | 洛谷 P7482</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-12 15:24:46" itemprop="dateCreated datePublished" datetime="2021-04-12T15:24:46+08:00">2021-04-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%B4%9B%E8%B0%B7%E6%9C%88%E8%B5%9B/" itemprop="url" rel="index"><span itemprop="name">洛谷月赛</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/luogu7482/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/luogu7482/" class="cy_cmt_count" data-xid="luogu7482/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P7482">题目链接</a></p>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>，定义 <span class="math inline">\(f(l,r)\)</span> 表示从区间 <span class="math inline">\([l,r]\)</span> 中选择若干不相邻的数的和的最大值。</p>
+<p>求 <span class="math inline">\(\sum\limits_{l=1}^n\sum\limits_{r=l}^nf(l,r) \bmod 10^9 + 7\)</span>。</p>
+<p><span class="math inline">\(n \le 10^5,0 \le a_i \le 10^9\)</span></p>
+</blockquote>
+<p><span class="math inline">\(f(l,r)\)</span> 显然可以通过 <code>DP</code> 在 <span class="math inline">\(O(r-l+1)\)</span> 的时间内求出，枚举左端点或右端点来计算答案都不太行得通，因为端点移动一步后难以快速维护。</p>
+<p>但所有包含同一位置 <span class="math inline">\(p\)</span> 的区间（<span class="math inline">\(p\)</span> 是端点不算）的 <span class="math inline">\(f\)</span> 值之和却可以快速计算，因为枚举了 <span class="math inline">\(p\)</span> 选不选后，<span class="math inline">\(p\)</span> 左右的部分是<strong>独立的</strong>。</p>
+<p>对于一个包含 <span class="math inline">\(p\)</span> 的区间 <span class="math inline">\([l,r]\)</span>，有 <span class="math display">\[
+f(l,r)=\max\{f(l,p-1)+f(p+1,r),f(l,p-2)+f(p+2,r)+A_p\}
+\]</span> 设 <span class="math display">\[
+x_i=\begin{cases}f(i,p-1)&amp;(i &lt; p)\\f(p+1,i)&amp;(i&gt;p)\\0&amp;(i=p)\end{cases},y_i=\begin{cases}f(i,p-2)&amp;(i&lt;p-1)\\f(p+2,i)&amp;(i&gt;p+1)\\0&amp;(p-1 \le i \le p+1)\end{cases}
+\]</span> <span class="math inline">\(x,y\)</span> 数组可以通过 <code>DP</code> 在 <span class="math inline">\(O(n)\)</span> 的时间内求出。 <span class="math display">\[
+f(l,r)=\max\{x_l+x_r,y_l+y_r+A_p\}\\
+x_l+x_r \ge y_l + y_r + A_p \iff (x_l - y_l) + (x_r - y_r) \ge A_p
+\]</span> 把所有除 <span class="math inline">\(p\)</span> 以外的位置按 <span class="math inline">\(x_i-y_i\)</span> 为关键字升序排序，再用双指针扫描一遍即可求出所有包含 <span class="math inline">\(p\)</span> （<span class="math inline">\(p\)</span> 是端点不算）的 <span class="math inline">\(f\)</span> 值之和，单次的复杂度为 <span class="math inline">\(O(n\log n)\)</span>。</p>
+<p>接下来就是套路了，考虑分治，定义函数 <span class="math inline">\(solve(L,R)\)</span> 表示 <span class="math inline">\(\sum\limits_{l=L}^R\sum\limits_{r=l}^Rf(l,r)\)</span>。</p>
+<p>令 <span class="math inline">\(mid = \lfloor \frac {L + R}2 \rfloor\)</span>，那么 <span class="math inline">\(solve(L, R) = solve(L, mid) + solve(mid, R) - A_{mid} + \sum\limits_{l=L}^{mid-1}\sum\limits_{r=mid+1}^Rf(l,r)\)</span>。</p>
+<p>最后一项用上述方法计算，总复杂度为 <span class="math inline">\(O(n \log^2 n)\)</span>。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pb push_back</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">1e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"><span class="keyword">const</span> ll P = <span class="number">1e9</span> + <span class="number">7</span>, Inf = <span class="number">1e18</span>;</span><br><span class="line"><span class="keyword">int</span> n; ll a[N], f[N][<span class="number">2</span>][<span class="number">2</span>], A[N], B[N], as;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(l == r) &#123; (as += a[l]) %= P; <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="keyword">if</span>(r == l + <span class="number">1</span>) &#123; (as += a[l] + a[r] + <span class="built_in">max</span>(a[l], a[r])) %= P; <span class="keyword">return</span>; &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (l + r) / <span class="number">2</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">0</span>, <span class="number">1</span>) f[mid][i][i] = <span class="number">0</span>, f[mid][i][!i] = -Inf;</span><br><span class="line">    <span class="built_in">rep</span>(i, mid + <span class="number">1</span>, r) <span class="built_in">rep</span>(j, <span class="number">0</span>, <span class="number">1</span>) &#123;</span><br><span class="line">        f[i][j][<span class="number">0</span>] = <span class="built_in">max</span>(f[i - <span class="number">1</span>][j][<span class="number">0</span>], f[i - <span class="number">1</span>][j][<span class="number">1</span>]);</span><br><span class="line">        f[i][j][<span class="number">1</span>] = f[i - <span class="number">1</span>][j][<span class="number">0</span>] + a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">per</span>(i, mid - <span class="number">1</span>, l) <span class="built_in">rep</span>(j, <span class="number">0</span>, <span class="number">1</span>) &#123;</span><br><span class="line">        f[i][j][<span class="number">0</span>] = <span class="built_in">max</span>(f[i + <span class="number">1</span>][j][<span class="number">0</span>], f[i + <span class="number">1</span>][j][<span class="number">1</span>]);</span><br><span class="line">        f[i][j][<span class="number">1</span>] = f[i + <span class="number">1</span>][j][<span class="number">0</span>] + a[i];</span><br><span class="line">    &#125;</span><br><span class="line">    vector &lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">    <span class="built_in">rep</span>(i, l, r) <span class="keyword">if</span>(i ^ mid) &#123;</span><br><span class="line">        v.<span class="built_in">pb</span>(i);</span><br><span class="line">        A[i] = <span class="built_in">max</span>(f[i][<span class="number">0</span>][<span class="number">0</span>], f[i][<span class="number">0</span>][<span class="number">1</span>]);</span><br><span class="line">        B[i] = <span class="built_in">max</span>(f[i][<span class="number">1</span>][<span class="number">0</span>], f[i][<span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">sort</span>(v.<span class="built_in">begin</span>(), v.<span class="built_in">end</span>(), [](<span class="keyword">int</span> i, <span class="keyword">int</span> j)&#123; <span class="keyword">return</span> A[i] - B[i] &lt; A[j] - B[j]; &#125;);</span><br><span class="line">    <span class="keyword">int</span> j = v.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    ll sua = <span class="number">0</span>, sub = <span class="number">0</span>; <span class="keyword">int</span> cna = <span class="number">0</span>, cnb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i : v) <span class="keyword">if</span>(i &gt; mid) (sub += B[i]) %= P, cnb++;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i : v) <span class="keyword">if</span>(i &lt; mid) &#123;</span><br><span class="line">        <span class="keyword">while</span>(j &gt;= <span class="number">0</span> &amp;&amp; (v[j] &lt; mid || A[i] - B[i] + A[v[j]] - B[v[j]] &gt; a[mid])) &#123;</span><br><span class="line">            <span class="keyword">if</span>(v[j] &gt; mid) (sua += A[v[j]]) %= P, (sub -= B[v[j]]) %= P, cna++, cnb--;</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        (as += (a[mid] + B[i]) * cnb + A[i] * cna + sua + sub) %= P;</span><br><span class="line">    &#125;</span><br><span class="line">    (as -= a[mid]) %= P, <span class="built_in">solve</span>(l, mid), <span class="built_in">solve</span>(mid, r);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;a[i]);</span><br><span class="line">    <span class="built_in">solve</span>(<span class="number">1</span>, n);</span><br><span class="line">    cout &lt;&lt; (as + P) % P;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/luogu7482/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/CF1305G/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/CF1305G/" class="post-title-link" itemprop="url">Kuroni and Antihype | Codeforces 1305G</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-06 14:23:35" itemprop="dateCreated datePublished" datetime="2021-04-06T14:23:35+08:00">2021-04-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/CF1305G/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/CF1305G/" class="cy_cmt_count" data-xid="CF1305G/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1305/problem/G">题目链接</a></p>
+<p>一张有 <span class="math inline">\(n\)</span> 个点的图，每个点的点权为 <span class="math inline">\(a_i\)</span>。</p>
+<p>点 <span class="math inline">\(u\)</span> 和点 <span class="math inline">\(v\)</span> 连边当且仅当 <span class="math inline">\(a_u \&amp; a_v = 0\)</span>。</p>
+<p>对于点 <span class="math inline">\(u\)</span>，有两种操作：</p>
+<ul>
+<li>直接涂黑，无贡献。</li>
+<li>找一个与 <span class="math inline">\(u\)</span> 相邻且已经涂黑的点 <span class="math inline">\(v\)</span>，再涂黑 <span class="math inline">\(u\)</span>，贡献为 <span class="math inline">\(a_v\)</span>。</li>
+</ul>
+<p>求涂黑所有点的最大贡献。</p>
+<p><span class="math inline">\(n \le 2 \cdot 10^5,a_i \le 2 \cdot 10^5\)</span></p>
+</blockquote>
+<p>首先加入一个点权为 <span class="math inline">\(0\)</span> 的虚点，且初始为黑，则两种操作就可以统一成第二种。</p>
+<p>对于每次操作，就从 <span class="math inline">\(u\)</span> 向 <span class="math inline">\(v\)</span> 连一条有向边，得到一个以 <span class="math inline">\(0\)</span> 为根的有根树。</p>
+<p>设点 <span class="math inline">\(u\)</span> 的度数为 <span class="math inline">\(degree_u\)</span>，则总贡献可以表示为 <span class="math display">\[
+\sum_{u \in V}a_u(degree_u-1)=\sum_{u \in V}a_udegree_u-\sum_{u \in V}a_u = \sum_{(u,v) \in E}a_u + a_v - \sum_{u \in V}a_u
+\]</span> 如果定义 <span class="math inline">\((u,v)\)</span> 边权为 <span class="math inline">\(a_u + a_v\)</span>，则前一部分为生成树权值，后一部分是定值。</p>
+<p>所以问题转化为求最大生成树。</p>
+<h3 id="先考虑所有点的点权两两不同">先考虑所有点的点权两两不同。</h3>
+<p>根据枚举子集的经典结论，边的总数小于 <span class="math inline">\(3^{18}\)</span>，但实际只有一半左右，即 <span class="math inline">\(1.7 \cdot 10^8\)</span> 左右。</p>
+<p>考虑 <code>Kruskal</code> 算法，虽然并查集复杂度要乘一个 <span class="math inline">\(\alpha(n)\)</span>，但感觉卡不满。</p>
+<p>首先不可能存下所有边，更不可能排序，所以考虑从大到小枚举边权。</p>
+<p>注意到 <span class="math inline">\(u,v\)</span> 连边当且仅当 <span class="math inline">\(a_u \&amp; a_v = 0\)</span>，而边权为 <span class="math inline">\(a_u + a_v\)</span>。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/CF1305G/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1107,388 +1511,8 @@ SG(u)=\text{mex}\{SG(v_1),SG(v_2),\cdots,SG(v_k)\}
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/CF1144G/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="platelet">
-      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="platelet's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/CF1144G/" class="post-title-link" itemprop="url">Two Merged Sequences | Codeforces 1144G</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-26 15:56:27" itemprop="dateCreated datePublished" datetime="2021-03-26T15:56:27+08:00">2021-03-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/CF1144G/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::http://example.com/CF1144G/" class="cy_cmt_count" data-xid="CF1144G/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://codeforces.com/problemset/problem/1144/G">题目链接</a></p>
-<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>。</p>
-<p>问能否把它拆成一个严格递增序列和一个严格递减序列，如果有解则输出方案。</p>
-<p><span class="math inline">\(n \le 2 \cdot 10^5\)</span></p>
-</blockquote>
-<p>设 <span class="math inline">\(f_{i,0}\)</span> 表示把序列的前 <span class="math inline">\(i\)</span> 个数拆成一个递增序列和一个递减序列（可以为空），并且 <span class="math inline">\(A_i\)</span> 属于递增序列时，递减序列结尾可能的最大值。<span class="math inline">\(f_{i,1}\)</span> 表示 <span class="math inline">\(A_i\)</span> 属于递减序列时，递增序列结尾可能的最小值。</p>
-<p>转移有四种：</p>
-<ul>
-<li><span class="math inline">\(A_{i-1},A_i\)</span> 都属于递增序列，条件是 <span class="math inline">\(A_{i-1} &lt; A_i\)</span>，转移为 <span class="math inline">\(f_{i-1,0} \rightarrow f_{i,0}\)</span> 。</li>
-<li><span class="math inline">\(A_{i-1},A_i\)</span> 都属于递减序列，情况类似。</li>
-<li><span class="math inline">\(A_{i-1}\)</span> 属于递减序列，<span class="math inline">\(A_i\)</span> 属于递增序列，条件是 <span class="math inline">\(f_{i-1,1} &lt; A_i\)</span>，转移为 <span class="math inline">\(A_{i-1} \rightarrow f_{i,0}\)</span>。</li>
-<li><span class="math inline">\(A_{i-1}\)</span> 属于递增序列，<span class="math inline">\(A_i\)</span> 属于递减序列，情况类似。</li>
-</ul>
-<p>为了输出方案，记 <span class="math inline">\(g_{i,0}\)</span> 表示在最优方案中 <span class="math inline">\(A_{i-1}\)</span> 属于哪个序列，<span class="math inline">\(g_{i,1}\)</span> 同理。</p>
-<p>实现中可以用 <code>pair &lt;int, int&gt;</code> 把 <code>f</code> 和 <code>g</code> 数组压一起。</p>
-<p>代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> For(i, l, r) for(int i = (l), i##e = (r); i &lt; i##e; i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fi first</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> se second</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp make_pair</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">2e5</span> + <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n, A[N], in[N];</span><br><span class="line">pair &lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; f[N][<span class="number">2</span>], ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;A[i]);</span><br><span class="line">    f[<span class="number">1</span>][<span class="number">0</span>].fi = N, f[<span class="number">1</span>][<span class="number">1</span>].fi = <span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">2</span>, n) &#123;</span><br><span class="line">        f[i][<span class="number">0</span>].fi = <span class="number">-1</span>, f[i][<span class="number">1</span>].fi = N;</span><br><span class="line">        <span class="keyword">if</span>(A[i - <span class="number">1</span>] &lt; A[i]) f[i][<span class="number">0</span>] = &#123;f[i - <span class="number">1</span>][<span class="number">0</span>].fi, <span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">if</span>(A[i - <span class="number">1</span>] &gt; A[i]) f[i][<span class="number">1</span>] = &#123;f[i - <span class="number">1</span>][<span class="number">1</span>].fi, <span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">if</span>(f[i - <span class="number">1</span>][<span class="number">1</span>].fi &lt; A[i]) f[i][<span class="number">0</span>] = <span class="built_in">max</span>(f[i][<span class="number">0</span>], <span class="built_in">mp</span>(A[i - <span class="number">1</span>], <span class="number">1</span>));</span><br><span class="line">        <span class="keyword">if</span>(f[i - <span class="number">1</span>][<span class="number">0</span>].fi &gt; A[i]) f[i][<span class="number">1</span>] = <span class="built_in">min</span>(f[i][<span class="number">1</span>], <span class="built_in">mp</span>(A[i - <span class="number">1</span>], <span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(~f[n][<span class="number">0</span>].fi || f[n][<span class="number">1</span>].fi &lt; N) &#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;YES&quot;</span>);</span><br><span class="line">        in[n] = ~f[n][<span class="number">0</span>].fi ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">per</span>(i, n, <span class="number">2</span>) in[i - <span class="number">1</span>] = f[i][in[i]].se;</span><br><span class="line">        <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, in[i]);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="built_in">puts</span>(<span class="string">&quot;NO&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/CF1144G/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/CF845F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="platelet">
-      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="platelet's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/CF845F/" class="post-title-link" itemprop="url">Guards In The Storehouse | Codeforces 845F</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-26 14:52:36" itemprop="dateCreated datePublished" datetime="2021-03-26T14:52:36+08:00">2021-03-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/CF845F/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::http://example.com/CF845F/" class="cy_cmt_count" data-xid="CF845F/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>709</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="http://codeforces.com/problemset/problem/845/F">题目链接</a></p>
-<p>给定一个 <span class="math inline">\(n \times m\)</span> 的网格，有些位置是障碍，其他是空地。</p>
-<p>在一个空地放灯可以照亮这个灯向右，向下第一个障碍前的所有方格。</p>
-<p>求有多少种在空地上放灯的方案，使得最多 <span class="math inline">\(1\)</span> 个空地没有被照亮，对 <span class="math inline">\(10^9+7\)</span> 取模。</p>
-<p><span class="math inline">\(nm \le 250\)</span></p>
-</blockquote>
-<p><span class="math inline">\(\land\)</span> 是逻辑与，<span class="math inline">\(\lor\)</span> 是逻辑或。</p>
-<p>首先 <span class="math inline">\(nm \le 250 \Rightarrow \min\{n,m\} \le 15\)</span>。</p>
-<p>如果 <span class="math inline">\(n &lt; m\)</span>，就可以将行列转置，问题不变，但 <span class="math inline">\(m \le 15\)</span> 了。</p>
-<p>容易想到对每一行状压，状压一行中每个格子向上第一个障碍前是否有灯（即这个格子是否有向下的光）。</p>
-<p>这样时间复杂度过高，感觉行不通，于是考虑压轮廓线，按照从上到下，从左到右的顺序放灯。</p>
-<p>设 <span class="math inline">\(f_{i\,a,b,S}\)</span> 表示目前<strong>将要</strong>决定格子 <span class="math inline">\(i=(x,y)\)</span> 放不放灯，<span class="math inline">\(a\)</span> 表示从 <span class="math inline">\(i\)</span> 向左第一个障碍前是（<span class="math inline">\(1\)</span>）否（<span class="math inline">\(0\)</span>）有灯（即 <span class="math inline">\(i\)</span> 左边是否有向右的光），<span class="math inline">\(b\)</span> 表示有几个目前<strong>已决定</strong>有没有放灯的空地没有被照亮，而 <span class="math inline">\(S\)</span> 是压的是第 <span class="math inline">\(x\)</span> 行前 <span class="math inline">\(y-1\)</span> 个格子和第 <span class="math inline">\(x-1\)</span> 行后 <span class="math inline">\(m-y+1\)</span> 个格子上是（<span class="math inline">\(1\)</span>）否（<span class="math inline">\(0\)</span>）有向下的光。</p>
-<p>图中的情况 <span class="math inline">\(a = 0, b = 1, S = \{0,0,1,0,1\}\)</span>。</p>
-<p><img src="https://i.loli.net/2021/03/26/3JZXsTfOdn2GyAe.png"></p>
-<p>转移就三种情况（先不考虑从一行最后一个格子转移到下一行第一个格子的情况）：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/CF845F/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/JOISC2021D3T3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="platelet">
-      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="platelet's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/JOISC2021D3T3/" class="post-title-link" itemprop="url">Meetings 2 | JOISC2021 D3T3</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-22 20:16:23" itemprop="dateCreated datePublished" datetime="2021-03-22T20:16:23+08:00">2021-03-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/JOISC/" itemprop="url" rel="index"><span itemprop="name">JOISC</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/JOISC2021D3T3/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::http://example.com/JOISC2021D3T3/" class="cy_cmt_count" data-xid="JOISC2021D3T3/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>给定 <span class="math inline">\(n\)</span> 个点的树。</p>
-<p>当一些结点上的人开会时，会将满足以下条件的结点作为会议的候选结点：所有参会者到此结点的距离和最小。</p>
-<p>对于每一个的 <span class="math inline">\(k \in [1,n]\)</span>，求出所有可能的 <span class="math inline">\(k\)</span> 个人的会议最多有多少个候选结点。</p>
-<p><span class="math inline">\(n \le 2 \cdot 10^5\)</span></p>
-</blockquote>
-<h4 id="这题告诉我们涉及到-size-时可以考虑把重心作为树的重心有没有什么性质">这题告诉我们：涉及到 <code>size</code> 时可以考虑把重心作为树的重心有没有什么性质。</h4>
-<h3 id="结论-1当-k-为奇数时答案为-1">结论 <span class="math inline">\(1\)</span>：当 <span class="math inline">\(k\)</span> 为奇数时，答案为 <span class="math inline">\(1\)</span>。</h3>
-<p>证明：</p>
-<p>设 <span class="math inline">\(f(u)\)</span> 表示删去 <span class="math inline">\(u\)</span> 后，每个连通块内关键结点（有参会者的结点）数量的最大值。</p>
-<p>假设 <span class="math inline">\(u\)</span> 是一个候选结点，那么 <span class="math inline">\(f(u) \le \lfloor \frac k2 \rfloor\)</span> ，否则可以找到一个与 <span class="math inline">\(u\)</span> 相邻的结点 <span class="math inline">\(v\)</span> 满足所在连通块大小大于 <span class="math inline">\(\lfloor \frac k2 \rfloor\)</span> ，不难发现 <span class="math inline">\(v\)</span> 比 <span class="math inline">\(u\)</span> 严格更优。</p>
-<p>因此任意一个不同于 <span class="math inline">\(u\)</span> 的结点 <span class="math inline">\(v\)</span> 必定满足 <span class="math inline">\(f(v) \ge k -f(u) &gt; \lfloor \frac k2 \rfloor\)</span>，所以 <span class="math inline">\(v\)</span> 一定不是候选结点。</p>
-<h3 id="结论-2当-k-为偶数时所有候选结点一定是一条链">结论 <span class="math inline">\(2\)</span>：当 <span class="math inline">\(k\)</span> 为偶数时，所有候选结点一定是一条链。</h3>
-<p>证明：</p>
-<p>若 <span class="math inline">\(u, v\)</span> 是不相邻两个结点，且都是候选结点。设边 <span class="math inline">\((u,v)\)</span> 两边的关键结点数量分别为 <span class="math inline">\(a,b\)</span>。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/JOISC2021D3T3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1512,14 +1536,14 @@ SG(u)=\text{mex}\{SG(v_1),SG(v_2),\cdots,SG(v_k)\}
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">190k</span>
+    <span title="站点总字数">197k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:53</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动

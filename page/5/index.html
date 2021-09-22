@@ -163,7 +163,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -204,6 +204,391 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/Gym100958B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/Gym100958B/" class="post-title-link" itemprop="url">Dictionary | Gym 100958B</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 22:49:04" itemprop="dateCreated datePublished" datetime="2021-03-13T22:49:04+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/Gym100958B/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/Gym100958B/" class="cy_cmt_count" data-xid="Gym100958B/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="http://codeforces.com/gym/100958/problem/B">题目链接</a></p>
+<p>有 <span class="math inline">\(n\)</span> 由<strong>小写字母和 <code>?</code> 组成</strong>的字符串，问有多少种替换 <code>?</code> 的方案，使得最终的字符串 <span class="math inline">\(S_1,S_2,\cdots,S_n\)</span> 满足字典序递增。</p>
+<p><span class="math inline">\(n \le 50, |S_i| \le 20\)</span></p>
+</blockquote>
+<h6 id="我的解法">我的解法：</h6>
+<p>在每个字符串的第一个字符被确定后发现第一个字符不同的串之间字典是关系已经确定，关系还未确定的（第一个字符相同）的串组成若干区间。</p>
+<p>由于区间之间是独立的，将删掉所有串第一个字符后所有区间内部的合法方案数乘起来就是总方案数，而“删掉所有串第一个字符后所有区间内部的合法方案”是一个数量不多的子问题，考虑把“前多少个字符已经删掉”和“区间”作为 <code>DP</code> 的状态。</p>
+<p>我们有一个状态的定义：<span class="math inline">\(f_{i,l,r}\)</span> 表示只从每个串的第 <span class="math inline">\(i\)</span> 个字符开始考虑，替换第 <span class="math inline">\(l\)</span> 个到 <span class="math inline">\(r\)</span> 个串中的 <code>?</code> ，使得 <span class="math inline">\(S_l,S_{l+1},\cdots,S_r\)</span> 满足字典序递增的方案数。</p>
+<p>然后发现这个状态虽然描述清楚了子问题，但没有很显然的转移。为了实现高效的转移，每次转移时还需要做一个横向 <code>DP</code>，有点麻烦。</p>
+<p>所有给这个状态在添加一维 <span class="math inline">\(k\)</span> 表示第 <span class="math inline">\(l\)</span> 个到 <span class="math inline">\(r\)</span> 个串中第 <span class="math inline">\(i\)</span> 个字符都必须大于等于 <span class="math inline">\(k\)</span>，然后就有很简单的递推：</p>
+<p>枚举最小的 <span class="math inline">\(j \in [l,r]\)</span>，使得 <span class="math inline">\(S_{j}[i] &gt; k\)</span>，也就是说 <span class="math inline">\(\forall x \in [l,j-1]\)</span>，有 <span class="math inline">\(S_x[i] = k\)</span>，<span class="math inline">\(\forall x \in [j,r]\)</span>，有 <span class="math inline">\(S_x[i] \ge k + 1\)</span>。 <span class="math display">\[
+f_{i,l,r,k}=\sum\limits_{j=l}^{r+1}f_{i+1,l,j-1,&#39;a&#39;}\cdot f_{i,j,r,k+1}
+\]</span> 为了处理较短的串提前结束而出现空字符的问题，记 <span class="math inline">\(k=-1\)</span> 表示允许空字符出现。如果 <span class="math inline">\(S_l[i]\)</span> 是空字符，那么它就等于 <span class="math inline">\(f_{i,l+1,r,&#39;a&#39;}\)</span>，否则是 <span class="math inline">\(f_{i,l,r,&#39;a&#39;}\)</span>，如果 <span class="math inline">\(k \ne -1\)</span>，那么 <span class="math inline">\(S_l[i]\)</span> 就不能是空字符。</p>
+<p>最后是边界条件：当 <span class="math inline">\(l &gt; r\)</span> 时值为 <span class="math inline">\(1\)</span>，当 <span class="math inline">\(l \le r \land k &gt; &#39;z&#39;\)</span> 时值为 <span class="math inline">\(0\)</span>。</p>
+<p>代码如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Gym100958B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/UVa12212/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/UVa12212/" class="post-title-link" itemprop="url">Password Remembering | UVa12212</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 22:47:35" itemprop="dateCreated datePublished" datetime="2021-03-13T22:47:35+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/UVa/" itemprop="url" rel="index"><span itemprop="name">UVa</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/UVa12212/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/UVa12212/" class="cy_cmt_count" data-xid="UVa12212/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=244&amp;page=show_problem&amp;problem=3364">题目链接</a></p>
+<p>输入正整数 <span class="math inline">\(A\)</span>、<span class="math inline">\(B\)</span> <span class="math inline">\((A \le B &lt; 2^{64})\)</span>，求有多少个整数 <span class="math inline">\(n\)</span> 满足: <span class="math inline">\(A \le n \le B \land A \le rev(n) \le B\)</span>。<span class="math inline">\(rev(1203)=3021\)</span>，<span class="math inline">\(rev(1050)=501\)</span>。</p>
+</blockquote>
+<p>不难看出此题是一个数位 DP，可以把以下作为状态：</p>
+<ul>
+<li>高 <span class="math inline">\(i\)</span> 位已经确定。</li>
+<li>高 <span class="math inline">\(i\)</span> 位与 <span class="math inline">\(A\)</span> 的大小关系（大于或等于）。</li>
+<li>高 <span class="math inline">\(i\)</span> 位与 <span class="math inline">\(B\)</span> 的大小关系（小于或等于）。</li>
+<li>从最高非零位到第 <span class="math inline">\(i\)</span> 位共有 <span class="math inline">\(j\)</span> 位。</li>
+<li>这 <span class="math inline">\(j\)</span> 位翻转后与 <span class="math inline">\(A\)</span> 的低 <span class="math inline">\(j\)</span> 位的大小关系（大于，小于或等于）。</li>
+<li>这 <span class="math inline">\(j\)</span> 位翻转后与 <span class="math inline">\(B\)</span> 的低 <span class="math inline">\(j\)</span> 位的大小关系（大于，小于或相等）。</li>
+<li>当前是否填了非零位。</li>
+<li><code>DP</code> 值是合法的填未确定位的方案数。</li>
+</ul>
+<p>感觉这个 DP 非常麻烦，状态数太多，有两维还是 <span class="math inline">\(0/1/2\)</span> 的。</p>
+<p>考虑差分一下，记 <span class="math inline">\(\text{calc}(A, B)\)</span> 表示有多少个整数 <span class="math inline">\(n\)</span> 满足: <span class="math inline">\(n&lt;A \land rev(n)&lt;B\)</span></p>
+<p>那么答案是 <span class="math inline">\(\text{calc}(B+1,B+1)-\text{calc}(A,B+1)-\text{calc}(B+1,A)+\text{calc}(A,A)\)</span></p>
+<p>剩下的问题是实现 <span class="math inline">\(\text{calc}\)</span> 函数，还是考虑数位 DP，但状态只需存：</p>
+<ul>
+<li>高 <span class="math inline">\(i\)</span> 位已经确定。</li>
+<li>高 <span class="math inline">\(i\)</span> 位与 <span class="math inline">\(A\)</span> 的大小关系（大于或等于）。</li>
+<li>从最高非零位到第 <span class="math inline">\(i\)</span> 位共有 <span class="math inline">\(j\)</span> 位。</li>
+<li>这 <span class="math inline">\(j\)</span> 位翻转后与 <span class="math inline">\(B\)</span> 的低 <span class="math inline">\(j\)</span> 位的大小关系（小于或不小于）。</li>
+<li>当前是否填了非零位。</li>
+</ul>
+<p>状态数现在少了两维，而且没有 <span class="math inline">\(0/1/2\)</span> 的。</p>
+<p>现在考虑转移方程：当前的状态是 <span class="math inline">\({(i,leA,j,leB,hv0)}\)</span>, 枚举第 <span class="math inline">\(i-1\)</span> 位上填 <span class="math inline">\(s\)</span>.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/UVa12212/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/problem2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="platelet">
+      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="platelet's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/problem2/" class="post-title-link" itemprop="url">一道题2</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-13 22:33:00" itemprop="dateCreated datePublished" datetime="2021-03-13T22:33:00+08:00">2021-03-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%80%83%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">考试</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan：</span>
+    
+    
+      <a title="changyan" href="/problem2/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::http://example.com/problem2/" class="cy_cmt_count" data-xid="problem2/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>给定一个长度为 <span class="math inline">\(n\)</span> 的序列 <span class="math inline">\(A\)</span>，把 <span class="math inline">\(A\)</span> 划分为两个非空集合，划分的价值为两个集合的异或和加起来，求可能的最大价值。</p>
+<p><span class="math inline">\(n \le 10^5,A_i \le 10^{18}\)</span></p>
+</blockquote>
+<p>设总异或和为 <span class="math inline">\(sum\)</span> ，若两个集合的异或和分别为 <span class="math inline">\(S_1,S_2\)</span>，由 <span class="math inline">\(S_1 \oplus S_2 = sum\)</span> 知道，若 <span class="math inline">\(sum\)</span> 第 <span class="math inline">\(i\)</span> 位为 <span class="math inline">\(1\)</span>，不管怎么划分，第 <span class="math inline">\(i\)</span> 位一定产生一次贡献。若 <span class="math inline">\(sum\)</span> 第 <span class="math inline">\(i\)</span> 位为 <span class="math inline">\(0\)</span>，那么 <span class="math inline">\(S_1,S_2\)</span> 在第 <span class="math inline">\(i\)</span> 位上相同。</p>
+<p>考虑 <span class="math inline">\(sum\)</span> 为 <span class="math inline">\(0\)</span> 的位，由于 <span class="math inline">\(S_1,S_2\)</span> 在这些位上是相同的，只需要最大化 <span class="math inline">\(S_1\)</span> 就行了，由于 <span class="math inline">\(S_1\)</span> 为全集和空集都不会成为最优解，问题就转化为：</p>
+<p>给定n个整数（数字可能重复），求在这些数中选取任意个，使得他们的异或和最大。</p>
+<p>用线性基解决。</p>
+<p>代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> rep(i, l, r) for(int i = (l); i &lt;= (r); i++)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> per(i, r, l) for(int i = (r); i &gt;= (l); i--)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mem(a, b) memset(a, b, sizeof a)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> a[<span class="number">100005</span>], bas[<span class="number">70</span>], su, ans;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cin &gt;&gt; n;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">scanf</span>(<span class="string">&quot;%lld&quot;</span>, &amp;a[i]), su ^= a[i];</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) a[i] &amp;= ~su;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, n) <span class="built_in">per</span>(j, <span class="number">59</span>, <span class="number">0</span>) <span class="keyword">if</span>(a[i] &gt;&gt; j &amp; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(bas[j]) a[i] ^= bas[j];</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">per</span>(k, j - <span class="number">1</span>, <span class="number">0</span>) <span class="keyword">if</span>(a[i] &gt;&gt; k &amp; <span class="number">1</span>) a[i] ^= bas[k];</span><br><span class="line">            <span class="built_in">rep</span>(k, j + <span class="number">1</span>, <span class="number">59</span>) <span class="keyword">if</span>(bas[k] &gt;&gt; j &amp; <span class="number">1</span>) bas[k] ^= a[i];</span><br><span class="line">            bas[j] = a[i]; <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">rep</span>(i, <span class="number">1</span>, <span class="number">59</span>) ans ^= bas[i];</span><br><span class="line">    cout &lt;&lt; su + ans * <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/problem2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2157,132 +2542,8 @@ f_{i,S} = \frac 1i \sum_{j = 1}^i (-1)^{j+1} \frac nS\gcd(j,S) f_{i-j,\gcd(j,S)}
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/BZ2238/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="platelet">
-      <meta itemprop="description" content="天地不仁<br>platelet.top | 血小板.top<br>song-jx.github.io">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="platelet's blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/BZ2238/" class="post-title-link" itemprop="url">Mst | BZOJ 2238</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-13 21:26:51" itemprop="dateCreated datePublished" datetime="2021-03-13T21:26:51+08:00">2021-03-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/BZOJ/" itemprop="url" rel="index"><span itemprop="name">BZOJ</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan：</span>
-    
-    
-      <a title="changyan" href="/BZ2238/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::http://example.com/BZ2238/" class="cy_cmt_count" data-xid="BZ2238/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://darkbzoj.tk/problem/2238">题目链接</a><br>
-给出 <span class="math inline">\(n\)</span> 个点，<span class="math inline">\(m\)</span> 条边的无向带权图，<span class="math inline">\(q\)</span> 次询问，询问在图中删掉一条边后的 <span class="math inline">\(\text{MST}\)</span> 的边权和。询问独立。<br>
-<span class="math inline">\(n \leq 5 \times 10^4, m \leq 10^5\)</span>。</p>
-</blockquote>
-<p>记原图的 <span class="math inline">\(\text{MST} = (E_{\text{MST}}, V_{\text{MST}})\)</span>。</p>
-<p>对于 <span class="math inline">\(e(u, v, w) \not \in E_{\text{MST}}\)</span>（下文称为非树边），将它删去后显然不会对答案造成任何影响。</p>
-<p>对于 <span class="math inline">\(e(u, v, w) \in E_{\text{MST}}\)</span>（下文称为树边），将它删去后，为了使得点 <span class="math inline">\(u, v\)</span> 仍然连通，我们必须要找一条非树边代替之，且这条非树边 <span class="math inline">\(e&#39;(u&#39;, v&#39;, w&#39;)\)</span> 所连接的顶点 <span class="math inline">\((u&#39;, v&#39;)\)</span>，在 <span class="math inline">\(\text{MST}\)</span> 上的路径必定覆盖了 <span class="math inline">\((u, v)\)</span>。</p>
-<p>自然的，我们想到枚举每一条非树边，并将其所连接的两个节点在 <span class="math inline">\(\text{MST}\)</span> 上的路径中的所有树边更新。</p>
-<p>更具体的，记 <span class="math inline">\(f_e\)</span>（其中 <span class="math inline">\(e\)</span> 为一条树边）为能代替 <span class="math inline">\(e\)</span> 的非树边的最小权值。一开始 <span class="math inline">\(f_e = +\infty\)</span>。对于枚举到的非树边 <span class="math inline">\(e&#39;(u&#39;, v&#39;, w&#39;)\)</span>，更新所有 <span class="math inline">\(e \in E&#39;\)</span>（其中 <span class="math inline">\(E&#39;\)</span> 代表 <span class="math inline">\((u&#39;, v&#39;)\)</span> 在 <span class="math inline">\(\text{MST}\)</span> 上的路径）的 <span class="math inline">\(f_e \leftarrow \min(f_e, w&#39;)\)</span>。</p>
-<p>问题转化为如何维护这个过程。</p>
-<p>一个经典的解法是利用树链剖分与线段树，网络上大多数的题解也是如此。不过这样做的复杂度是 <span class="math inline">\(O(n \log^2 n)\)</span> 的，且代码长度较长。</p>
-<p>我们采用一种码量更少，复杂度更为优秀的 <span class="math inline">\(O(n \log n)\)</span> 算法，树上倍增来解决。</p>
-<p>记录倍增数组 <span class="math inline">\(\text{fa}(u, k)\)</span> 表示 <span class="math inline">\(u\)</span> 的 <span class="math inline">\(2^k\)</span> 级祖先。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/BZ2238/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -2306,14 +2567,14 @@ f_{i,S} = \frac 1i \sum_{j = 1}^i (-1)^{j+1} \frac nS\gcd(j,S) f_{i-j,\gcd(j,S)}
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">190k</span>
+    <span title="站点总字数">197k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:53</span>
+    <span title="站点阅读时长">2:59</span>
   </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
