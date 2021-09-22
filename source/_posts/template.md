@@ -1,11 +1,10 @@
 ---
 title: 模板（持续更新）
 date: 2021-04-16 16:45:41
-updated: 2021-04-16 16:45:41
 tags: [模板,持续更新]
 hidden: true
 ---
-**左手栏有目录。**
+** 左手栏有目录。**
 
 出现的宏：
 
@@ -64,7 +63,7 @@ int read() {
     #define gc (p1 == p2 && (p2 = (p1 = buf) + in -> sgetn(buf, M), p1 == p2) ? -1 : *p1++)
     static char buf[M], *p1, *p2;
     int c = gc, r = 0, f = 1;
-    while(c < 48) { if(c == 45) f = -1; c = gc; }
+    for(; c < 48; c = gc) if(c == 45) f = -1;
     while(c > 47) r = r * 10 + (c & 15), c = gc;
     return r * f;
 }
@@ -378,9 +377,9 @@ template<int m> struct static_modint {
     using mint = static_modint;
   public:
     static mint raw(int v) { mint x; return x._v = v, x; }
-    static_modint() : _v(0) {}
+    static_modint() :_v(0) {}
     template<class T> static_modint(T v) { ll x = v % m; _v = x < 0 ? x + m : x; }
-    uint val() const { return _v; }
+    uint val()const { return _v; }
     mint& operator++() { if(++_v == m) _v = 0; return *this; }
     mint& operator--() { if(!_v--) _v = m - 1; return *this; }
     mint operator++(int) { mint res = *this; ++*this; return res; }
@@ -389,10 +388,10 @@ template<int m> struct static_modint {
     mint& operator-=(const mint& rhs) { _v -= rhs._v; if(_v >= m) _v += m; return *this; }
     mint& operator*=(const mint& rhs) { ull z = _v; z *= rhs._v, _v = z % m; return *this; }
     mint& operator/=(const mint& rhs) { return *this = *this * rhs.inv(); }
-    mint operator+() const { return *this; }
-    mint operator-() const { return mint() - *this; }
-    mint pow(ll n) const { assert(0 <= n); mint x = *this, r = 1; for(; n; n >>= 1, x *= x) if(n & 1) r *= x; return r; }
-    mint inv() const { if(prime) { assert(_v); return pow(m - 2); } else { auto eg = inv_gcd(_v, m); assert(eg.first == 1); return eg.second; } }
+    mint operator+()const { return *this; }
+    mint operator-()const { return mint() - *this; }
+    mint pow(ll n)const { assert(0 <= n); mint x = *this, r = 1; for(; n; n >>= 1, x *= x) if(n & 1) r *= x; return r; }
+    mint inv() const{ if(prime) { assert(_v); return pow(m - 2); } else { auto eg = inv_gcd(_v, m); assert(eg.first == 1); return eg.second; } }
     friend mint operator+(const mint& lhs, const mint& rhs) { return mint(lhs) += rhs; }
     friend mint operator-(const mint& lhs, const mint& rhs) { return mint(lhs) -= rhs; }
     friend mint operator*(const mint& lhs, const mint& rhs) { return mint(lhs) *= rhs; }
@@ -408,9 +407,9 @@ template<int id> struct dynamic_modint {
   public:
     static void set_mod(int m) { assert(1 <= m), bt = barrett(m); }
     static mint raw(int v) { mint x; return x._v = v, x; }
-    dynamic_modint() : _v(0) {}
+    dynamic_modint() :_v(0) {}
     template<class T> dynamic_modint(T v) { ll x = v % bt.m; _v = x < 0 ? x + bt.m : x; }
-    uint val() const { return _v; }
+    uint val()const { return _v; }
     mint& operator++() { if(++_v == bt.m) _v = 0; return *this; }
     mint& operator--() { if(!_v--) _v = bt.m - 1; return *this; }
     mint operator++(int) { mint res = *this; ++*this; return res; }
@@ -419,10 +418,10 @@ template<int id> struct dynamic_modint {
     mint& operator-=(const mint& rhs) { _v += bt.m - rhs._v; if(_v >= bt.m) _v -= bt.m; return *this; }
     mint& operator*=(const mint& rhs) { _v = bt.mul(_v, rhs._v); return *this; }
     mint& operator/=(const mint& rhs) { return *this = *this * rhs.inv(); }
-    mint operator+() const { return *this; }
-    mint operator-() const { return mint() - *this; }
-    mint pow(ll n) const { assert(0 <= n); mint x = *this, r = 1; for(; n; n >>= 1, x *= x) if(n & 1) r *= x; return r; }
-    mint inv() const { auto eg = inv_gcd(_v, bt.m); assert(eg.first == 1); return eg.second; }
+    mint operator+()const { return *this; }
+    mint operator-()const { return mint() - *this; }
+    mint pow(ll n)const { assert(0 <= n); mint x = *this, r = 1; for(; n; n >>= 1, x *= x) if(n & 1) r *= x; return r; }
+    mint inv()const { auto eg = inv_gcd(_v, bt.m); assert(eg.first == 1); return eg.second; }
     friend mint operator+(const mint& lhs, const mint& rhs) { return mint(lhs) += rhs; }
     friend mint operator-(const mint& lhs, const mint& rhs) { return mint(lhs) -= rhs; }
     friend mint operator*(const mint& lhs, const mint& rhs) { return mint(lhs) *= rhs; }
@@ -486,14 +485,15 @@ int main() {
 ### 函数
 
 ```cpp
-ll gen(ll x) {
-    const ll k = 0x9ddfea08eb382d69ull;
+using ull = unsigned ll;
+ull gen(ull x) {
+    const ull k = 0x9ddfea08eb382d69ull;
     rep(i, 1, 3) x *= k, x ^= x >> 47;
     return x * k;
 }
-ll rnd() {
-    static ll s = 2;
-    return (s += gen(s)) & LONG_LONG_MAX;
+int rnd() {
+    static ull s = 2;
+    return (s += gen(s)) & INT_MAX;
 }
 ```
 
@@ -507,7 +507,7 @@ ll mul(ll a, ll b, ll p) {
 }
 ```
 
-### `bash` 对拍
+## `bash` 对拍
 
 ```bash
 #!/bin/bash
@@ -548,8 +548,8 @@ namespace Pollard_Rho {
             ll k = n - 1, t;
             while(~k & 1) k /= 2;
             if((t = Pow(a, k, n)) == 1) continue;
-            while(t ^ 1 && t ^ n - 1) t = mul(t, t, n);
-            if(t ^ n - 1) return 0;
+			while(t ^ 1 && t ^ n - 1) t = mul(t, t, n);
+			if(t ^ n - 1) return 0;
         }
         return 1;
     }
@@ -705,7 +705,7 @@ void NTT(ll a[], int t) {
 ```cpp
 void NTT(mint a[], int t) {
     if(t) reverse(a + 1, a + lim);
-    For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
+	For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i *= 2) {
         mint wn = mint(3).pow(P / 2 / i);
         for(int j = 0; j < lim; j += i * 2) {
@@ -717,7 +717,7 @@ void NTT(mint a[], int t) {
         }
     }
     mint inv = mint(lim).inv();
-    if(t) For(i, 0, lim) a[i] *= inv;
+	if(t) For(i, 0, lim) a[i] *= inv;
 }
 ```
 
@@ -994,7 +994,7 @@ void bld(int n) {
 }
 void NTT(mint a[], int t) {
     if(t) reverse(a + 1, a + lim);
-    For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
+	For(i, 0, lim) if(rev[i] < i) swap(a[i], a[rev[i]]);
     for(int i = 1; i < lim; i *= 2) {
         mint wn = mint(3).pow(P / 2 / i);
         for(int j = 0; j < lim; j += i * 2) {
@@ -1006,7 +1006,7 @@ void NTT(mint a[], int t) {
         }
     }
     mint inv = mint(lim).inv();
-    if(t) For(i, 0, lim) a[i] *= inv;
+	if(t) For(i, 0, lim) a[i] *= inv;
 }
 void Inv(mint a[], mint b[], int n) {
     static mint c[N];
@@ -1313,6 +1313,25 @@ void cut(int u, int v) {
 }
 ```
 
+## pbds::tree
+
+#### 定义
+
+```cpp
+#include <bits/extc++.h>
+
+using namespace __gnu_pbds;
+template<class T> using Set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class K, class V> using Map = tree<K, V, less<K>, rb_tree_tag, tree_order_statistics_node_update>;
+#define ins(T, x) (T).insert(x)
+#define era(T, x) (T).erase(x)
+#define rk(T, x) ((T).order_of_key(x) + 1)
+#define kth(T, x) (*(T).find_by_order(x - 1))
+#define pre(T, x) (*--(T).lower_bound(x))
+#define nxt(T, x) (*(T).upper_bound(x))
+#define bld(T, l, r) (T).copy_from_range(l, r)
+```
+
 ## RBS 树
 
 ### 普通版
@@ -1376,7 +1395,7 @@ int pre(int o, int x, int re = -Inf) {
     while(o) o = x > c[o] ? re = max(re, c[o]), rs[o] : ls[o];
     return re;
 }
-int suf(int o, int x, int re = Inf) {
+int nxt(int o, int x, int re = Inf) {
     while(o) o = x < c[o] ? re = min(re, c[o]), ls[o] : rs[o];
     return re;
 }
@@ -2196,14 +2215,14 @@ void ins(int c) {
 
 ```cpp
 int calc(char s[]) {
-    int i = 0, j = 1, k = 0;
-    while(i < n && j < n && k < n)
-    if(s[(i + k) % n] == s[(j + k) % n]) k++;
-    else {
-        if(s[(i + k) % n] > s[(j + k) % n]) swap(i, j);
-        j += k + 1, k = 0;
-        if(i == j) i++;
-    }
-    return min(i, j);
+	int i = 0, j = 1, k = 0;
+	while(i < n && j < n && k < n)
+	if(s[(i + k) % n] == s[(j + k) % n]) k++;
+	else {
+		if(s[(i + k) % n] > s[(j + k) % n]) swap(i, j);
+		j += k + 1, k = 0;
+		if(i == j) i++;
+	}
+	return min(i, j);
 }
 ```
